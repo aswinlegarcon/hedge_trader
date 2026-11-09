@@ -93,7 +93,7 @@ STT 0.15 % on option sell premium (since 2026-04-01) · Kite Connect ₹500/mont
 
 ## Layout
 
-See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
+See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md). Spec traceability and Phase 2 inputs: [docs/SPEC_HANDOFF.md](docs/SPEC_HANDOFF.md); original brief: [docs/ORIGINAL_SPEC.md](docs/ORIGINAL_SPEC.md).
 
 ## License
 
