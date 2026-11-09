@@ -1,0 +1,33 @@
+# Secrets — never commit
+.env
+*.env
+!.env.example
+secrets/
+*.token
+*.pem
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+build/
+dist/
+
+# Runtime data
+data/journal.db
+data/*.db
+data/imports/*
+!data/imports/.gitkeep
+logs/
+*.log
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+.streamlit/secrets.toml
