@@ -30,6 +30,8 @@ reported as `BOOTSTRAP_FAILED` at the call site. Regression tests:
 
 ## Later check — fixed tree (working tree of the same commit; stream code identical to what was committed)
 
+Disclosure: the working tree at that moment also already contained the Spec 16 transport hook (`upstox_transport.py` → `note_response`), so this run recorded a value-free `verified` mark for the environment token in `data/secrets/upstox_auth_state.json`; that is why Settings later shows `connected · source: environment`.
+
 Elapsed 107 s total; streaming held ~90 s deliberately short because the market was closed.
 
 | Step | Observation |
