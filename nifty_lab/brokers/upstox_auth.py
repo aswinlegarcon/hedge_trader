@@ -12,6 +12,7 @@ that need the header; `ResolvedToken.__repr__` hides the value.
 """
 from __future__ import annotations
 
+import fcntl
 import hashlib
 import json
 import logging
@@ -132,13 +133,53 @@ def _write_private(path: Path, payload: dict) -> None:
         raise
 
 
+_LOCKS: dict[str, threading.RLock] = {}
+_LOCKS_GUARD = threading.Lock()
+
+
+def _lock_for(path: Path) -> threading.RLock:
+    """All TokenStore instances for the same file share one in-process lock (default_store() is called per caller)."""
+    key = str(path.resolve()) if path.exists() else str(path.absolute())
+    with _LOCKS_GUARD:
+        return _LOCKS.setdefault(key, threading.RLock())
+
+
+class _StoreLock:
+    """In-process RLock + advisory OS file lock (fcntl.flock) so competing threads *and* processes serialize
+    every read-modify-write of the shared state. Supported deployment: Linux/macOS single host."""
+
+    def __init__(self, path: Path) -> None:
+        self._rlock = _lock_for(path)
+        self._lockfile = path.with_name(path.name + ".lock")
+        self._fd: int | None = None
+
+    def __enter__(self):
+        self._rlock.acquire()
+        self._lockfile.parent.mkdir(parents=True, exist_ok=True)
+        self._fd = os.open(self._lockfile, os.O_RDWR | os.O_CREAT, 0o600)
+        fcntl.flock(self._fd, fcntl.LOCK_EX)
+        return self
+
+    def __exit__(self, *exc) -> None:
+        try:
+            if self._fd is not None:
+                fcntl.flock(self._fd, fcntl.LOCK_UN)
+                os.close(self._fd)
+        finally:
+            self._fd = None
+            self._rlock.release()
+
+
 class TokenStore:
-    """Server-side managed token (one file) plus value-free marks keyed by fingerprint (sibling state file)."""
+    """Server-side managed token (one file) plus value-free marks keyed by fingerprint (sibling state file).
+
+    Marks are durable and one-directional: `rejected` and `expired` are never cleared by a later success, so a delayed
+    2xx from an in-flight request cannot resurrect a credential that the broker has rejected or that has expired."""
 
     def __init__(self, path: Path) -> None:
         self.path = Path(path)
         self.state_path = self.path.with_name("upstox_auth_state.json")
-        self._lock = threading.Lock()
+        self._lock = _StoreLock(self.path)
 
     # -- token ------------------------------------------------------------
     def read(self) -> ResolvedToken | None:
@@ -176,21 +217,27 @@ class TokenStore:
             return {}
 
     def _update_state(self, key: str, fp: str) -> None:
-        with self._lock:
+        with self._lock:  # read-modify-write under the shared lock: no competing write can drop a mark
             state = self._state()
-            state.setdefault(key, {})[fp] = _utcnow().isoformat()
-            if key == "verified":
-                state.get("rejected", {}).pop(fp, None)
+            state.setdefault(key, {}).setdefault(fp, _utcnow().isoformat())
             _write_private(self.state_path, state)
 
     def mark_rejected(self, fp: str) -> None:
         self._update_state("rejected", fp)
 
+    def mark_expired(self, fp: str) -> None:
+        self._update_state("expired", fp)
+
     def mark_verified(self, fp: str) -> None:
-        self._update_state("verified", fp)
+        self._update_state("verified", fp)  # never clears rejected/expired
 
     def is_rejected(self, fp: str) -> bool:
         return fp in self._state().get("rejected", {})
+
+    def is_unusable(self, fp: str) -> bool:
+        """Rejected by the broker or known-expired — regardless of which source presents the token now."""
+        state = self._state()
+        return fp in state.get("rejected", {}) or fp in state.get("expired", {})
 
     def verified_at(self, fp: str) -> datetime | None:
         raw = self._state().get("verified", {}).get(fp)
@@ -214,10 +261,15 @@ def resolve_access_token(store: TokenStore | None = None, *, now: datetime | Non
     store = store or default_store()
     now = now or _utcnow()
     managed = store.read()
-    if managed is not None and not store.is_rejected(managed.fingerprint) and (managed.expires_at is None or now < managed.expires_at):
-        return managed
+    if managed is not None:
+        if managed.expires_at is not None and now >= managed.expires_at:
+            store.mark_expired(managed.fingerprint)  # durable: an identical environment token can never revive it
+        elif not store.is_unusable(managed.fingerprint):
+            return managed
     env = _env_token()
-    if env is not None and not store.is_rejected(env.fingerprint):
+    # A *different* environment credential is a documented fallback: it has no issuance metadata (expiry unknown)
+    # and stays "not verified" until a 2xx; a rejected or known-expired value is never returned from any source.
+    if env is not None and not store.is_unusable(env.fingerprint):
         return env
     return None
 
@@ -229,7 +281,7 @@ def auth_status(store: TokenStore | None = None, *, now: datetime | None = None)
     if managed is None and env is None:
         return AuthSummary(AuthStatus.NOT_CONFIGURED, None, None, False, "No Upstox access token configured. Use Reconnect Upstox (or set UPSTOX_ACCESS_TOKEN in .env for the initial path).")
     if managed is not None and managed.expires_at is not None and now >= managed.expires_at:
-        if env is None or store.is_rejected(env.fingerprint):
+        if env is None or store.is_unusable(env.fingerprint):
             return AuthSummary(AuthStatus.REAUTH_REQUIRED, "managed", managed.expires_at, True, f"Managed token expired at {managed.expires_at.astimezone(IST):%Y-%m-%d %H:%M} IST (documented 03:30 IST daily expiry). Reconnect Upstox.")
     active = resolve_access_token(store, now=now)
     if active is None:
@@ -281,9 +333,10 @@ class OAuthConfig:
 
 @dataclass
 class PendingLogin:
-    session_key: str
+    session_key: str  # the Streamlit session that clicked Reconnect; only it may complete
     created_mono: float
     used: bool = False
+    code: str | None = None  # held in process memory only between callback receipt and completion
 
 
 _PENDING: dict[str, PendingLogin] = {}
@@ -305,11 +358,46 @@ def begin_login(*, session_key: str, mono: float | None = None) -> tuple[str, st
     return url, state
 
 
+def _pending_locked(state: str | None, now: float) -> PendingLogin:
+    if not state:
+        raise LoginError("Reconnect callback is missing its state. Start Reconnect Upstox again.")
+    pending = _PENDING.get(state)
+    if pending is None or pending.used:
+        raise LoginError("Reconnect state is unknown or was already used. Start Reconnect Upstox again.")
+    if now - pending.created_mono > STATE_TTL_SEC:
+        _PENDING.pop(state, None)
+        raise LoginError("Reconnect expired (10 minute limit). Start Reconnect Upstox again.")
+    return pending
+
+
+def receive_callback(*, code: str | None, state: str | None, mono: float | None = None) -> str:
+    """Step 1 (any session, typically the new tab Upstox redirected to): validate and hold the code for the initiating
+    session. Exchanges nothing, installs nothing, stops nothing. Returns a safe instruction for the operator."""
+    now = time.monotonic() if mono is None else mono
+    if not code:
+        raise LoginError("Reconnect callback is missing its authorization code. Start Reconnect Upstox again.")
+    with _PENDING_LOCK:
+        pending = _pending_locked(state, now)
+        if pending.code is not None:
+            raise LoginError("This approval was already received. Complete it from the original Settings tab, or start again.")
+        pending.code = code
+    return "Approval received. Return to the original Settings tab that started this reconnect and click Complete reconnection. You can close this tab."
+
+
+def pending_for_session(session_key: str, *, mono: float | None = None) -> tuple[str, bool] | None:
+    """(state, approval_received) for the unused, unexpired login this session initiated, else None."""
+    now = time.monotonic() if mono is None else mono
+    with _PENDING_LOCK:
+        for state, p in _PENDING.items():
+            if p.session_key == session_key and not p.used and now - p.created_mono <= STATE_TTL_SEC:
+                return state, p.code is not None
+    return None
+
+
 @dataclass(frozen=True)
 class LoginResult:
     ok: bool
     message: str
-    cross_session: bool  # callback arrived in a different Streamlit session than the one that started it (new tab)
 
 
 class UpstoxAuthTransport:
@@ -345,20 +433,19 @@ def _stop_active_stream() -> None:
     stop_for_credential_change()
 
 
-def complete_login(*, code: str | None, state: str | None, session_key: str, transport: UpstoxAuthTransport, store: TokenStore | None = None, mono: float | None = None) -> LoginResult:
-    """Validate the callback (state: known, unused, unexpired → consumed before any exchange), exchange server-side,
-    stop any active stream, then atomically install the token. Failure leaves the existing credential untouched."""
+def complete_login(*, state: str | None, session_key: str, transport: UpstoxAuthTransport, store: TokenStore | None = None, mono: float | None = None) -> LoginResult:
+    """Step 2, only in the session that started the login: consume the held code (single-use), exchange it server-side,
+    stop any active stream, install atomically. Any failure leaves the existing credential untouched."""
     now = time.monotonic() if mono is None else mono
-    if not state or not code:
-        raise LoginError("Reconnect callback is missing its state or code. Start Reconnect Upstox again.")
     with _PENDING_LOCK:
-        pending = _PENDING.get(state)
-        if pending is None or pending.used:
-            raise LoginError("Reconnect callback state is unknown or was already used. Start Reconnect Upstox again.")
-        if now - pending.created_mono > STATE_TTL_SEC:
-            _PENDING.pop(state, None)
-            raise LoginError("Reconnect callback expired (10 minute limit). Start Reconnect Upstox again.")
-        pending.used = True  # single-use, consumed before the exchange
+        pending = _pending_locked(state, now)
+        if pending.session_key != session_key:
+            raise LoginError("This reconnect was started from a different session. Complete it from the Settings tab that started it.")
+        if pending.code is None:
+            raise LoginError("Upstox approval has not been received yet. Finish the login in the Upstox tab, then click Complete reconnection.")
+        pending.used = True  # single-use: consumed before the exchange
+        code = pending.code
+        _PENDING.pop(state, None)  # the code is no longer held anywhere after this point
     cfg = OAuthConfig.from_env()
     form = {"code": code, "client_id": cfg.client_id, "client_secret": cfg.client_secret, "redirect_uri": cfg.redirect_uri, "grant_type": "authorization_code"}
     try:
@@ -372,7 +459,7 @@ def complete_login(*, code: str | None, state: str | None, session_key: str, tra
     _stop_active_stream()  # active streams must not continue across a credential change
     store.install(token, issued_at=_utcnow(), source="oauth")
     _LOG.info("upstox: replacement access token installed (managed store); streams stopped; explicit Start required")
-    return LoginResult(True, "Upstox reconnected: a new access token is installed. Any running stream was stopped; press Start to resume.", pending.session_key != session_key)
+    return LoginResult(True, "Upstox reconnected: a new access token is installed. Any running stream was stopped; press Start to resume.")
 
 
 def reset_login_registry_for_tests() -> None:

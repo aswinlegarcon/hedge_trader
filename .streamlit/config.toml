@@ -7,3 +7,6 @@ gatherUsageStats = false
 
 [server]
 headless = true
+# Spec 16: the dashboard listens on loopback only. Remote operators use an SSH tunnel
+# (ssh -N -L 8501:127.0.0.1:8501 <host>); OAuth reconnect is refused when this is not loopback.
+address = "127.0.0.1"

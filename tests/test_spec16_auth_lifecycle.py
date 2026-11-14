@@ -28,6 +28,7 @@ from nifty_lab.brokers.upstox_auth import (
     begin_login,
     complete_login,
     default_store,
+    receive_callback,
     expiry_after,
     fingerprint,
     reset_login_registry_for_tests,
@@ -183,6 +184,65 @@ def test_s05_expired_managed_token_requires_reauth_and_is_not_used(monkeypatch):
     summary = auth_status()
     assert summary.status == AuthStatus.REAUTH_REQUIRED and summary.expiry_known and "expired" in summary.detail.lower()
     assert_clean(summary.detail)
+    # identical token supplied through the environment must not resurrect the known-expired credential
+    monkeypatch.setenv("UPSTOX_ACCESS_TOKEN", NEW_TOKEN)
+    assert resolve_access_token() is None
+    assert auth_status().status == AuthStatus.REAUTH_REQUIRED
+    store.clear()  # even after the managed file is gone, the expiry mark is durable
+    assert resolve_access_token() is None
+    # a genuinely different environment credential is a documented fallback with unknown expiry, unverified
+    monkeypatch.setenv("UPSTOX_ACCESS_TOKEN", ENV_TOKEN)
+    tok = resolve_access_token()
+    assert tok is not None and tok.source == "environment" and tok.expires_at is None
+    assert auth_status().status == AuthStatus.NOT_VERIFIED
+
+
+def test_s17_late_success_cannot_resurrect_a_rejected_credential():
+    store = default_store()
+    fp = fingerprint(ENV_TOKEN)
+    store.mark_rejected(fp)
+    store.mark_verified(fp)  # delayed 2xx from an in-flight request lands after the 401
+    assert store.is_rejected(fp)
+    import os as _os
+
+    _os.environ["UPSTOX_ACCESS_TOKEN"] = ENV_TOKEN
+    try:
+        assert resolve_access_token() is None and auth_status().status == AuthStatus.REAUTH_REQUIRED
+    finally:
+        del _os.environ["UPSTOX_ACCESS_TOKEN"]
+    # even the transport hook ordering 401 → 200 keeps the rejection
+    from nifty_lab.brokers.upstox_auth import note_response
+
+    note_response(f"Bearer {NEW_TOKEN}", 401)
+    note_response(f"Bearer {NEW_TOKEN}", 200)
+    assert store.is_rejected(fingerprint(NEW_TOKEN))
+
+
+def test_s18_shared_state_updates_are_not_lost_under_concurrent_writers():
+    import threading
+
+    fps = [fingerprint(f"tok-{i}") for i in range(40)]
+    errors: list[BaseException] = []
+
+    def worker(i: int) -> None:
+        try:
+            st = default_store()  # a fresh instance per caller, as production code does
+            (st.mark_rejected if i % 2 else st.mark_verified)(fps[i])
+            if i % 4 == 0:
+                st.mark_rejected(fps[0])
+        except BaseException as e:  # noqa: BLE001
+            errors.append(e)
+
+    threads = [threading.Thread(target=worker, args=(i,)) for i in range(40)]
+    for t in threads:
+        t.start()
+    for t in threads:
+        t.join(5)
+    assert errors == []
+    st = default_store()
+    for i, fp in enumerate(fps):
+        assert st.is_rejected(fp) if i % 2 else st.verified_at(fp) is not None, i
+    assert st.is_rejected(fps[0])  # the rejection written concurrently with a verification survived
 
 
 def test_s06_status_labels_are_value_free_and_truthful(monkeypatch):
@@ -261,7 +321,7 @@ def test_s09_begin_login_requires_configuration(monkeypatch):
     assert "UPSTOX_API_SECRET" in str(exc.value) and CLIENT_ID not in str(exc.value)
 
 
-@pytest.mark.parametrize("case", ["missing_state", "unknown_state", "missing_code", "expired", "replayed"])
+@pytest.mark.parametrize("case", ["missing_state", "unknown_state", "missing_code", "expired", "replayed_callback", "replayed_completion"])
 def test_s10_callback_validation_rejects_bad_states_without_exchange(case):
     fake = FakeTokenSession()
     _, state = begin_login(session_key="sess")
@@ -274,17 +334,41 @@ def test_s10_callback_validation_rejects_bad_states_without_exchange(case):
         code = None
     elif case == "expired":
         ua._PENDING[state].created_mono -= ua.STATE_TTL_SEC + 1
-    elif case == "replayed":
-        assert complete_login(code=code, state=state, session_key="sess", transport=auth_transport(fake)).ok
+    elif case == "replayed_callback":
+        receive_callback(code=code, state=state)
+    elif case == "replayed_completion":
+        receive_callback(code=code, state=state)
+        assert complete_login(state=state, session_key="sess", transport=auth_transport(fake)).ok
         fake.calls.clear()
     with pytest.raises(LoginError) as exc:
-        complete_login(code=code, state=st_val, session_key="sess", transport=auth_transport(fake))
-    assert fake.calls == []  # no token exchange for an invalid callback
+        if case == "replayed_completion":
+            complete_login(state=state, session_key="sess", transport=auth_transport(fake))
+        else:
+            receive_callback(code=code, state=st_val)
+    assert fake.calls == []  # no token exchange for an invalid callback or a replay
     assert_clean(str(exc.value))
-    assert resolve_access_token() is None or case == "replayed"
+    assert resolve_access_token() is None or case == "replayed_completion"
 
 
-def test_s11_valid_callback_exchanges_server_side_installs_token_and_stops_active_stream(monkeypatch, caplog):
+def test_s19_completion_requires_the_initiating_session_and_a_received_callback(monkeypatch):
+    monkeypatch.setenv("UPSTOX_ACCESS_TOKEN", ENV_TOKEN)
+    fake = FakeTokenSession()
+    _, state = begin_login(session_key="sess-A")
+    with pytest.raises(LoginError) as exc:  # no approval received yet
+        complete_login(state=state, session_key="sess-A", transport=auth_transport(fake))
+    assert "not been received" in str(exc.value).lower() or "approval" in str(exc.value).lower()
+    msg = receive_callback(code=AUTH_CODE, state=state)
+    assert "original" in msg.lower() and AUTH_CODE not in msg
+    with pytest.raises(LoginError) as exc:  # the callback tab (another session) cannot complete
+        complete_login(state=state, session_key="sess-B", transport=auth_transport(fake))
+    assert "session" in str(exc.value).lower()
+    assert fake.calls == [] and resolve_access_token().value == ENV_TOKEN and default_store().read() is None
+    assert ua._PENDING[state].used is False  # a wrong-session attempt does not burn the pending login
+    result = complete_login(state=state, session_key="sess-A", transport=auth_transport(fake))  # legitimate completion
+    assert result.ok and len(fake.calls) == 1 and resolve_access_token().value == NEW_TOKEN
+
+
+def test_s11_valid_completion_exchanges_server_side_installs_token_and_stops_active_stream(monkeypatch, caplog):
     monkeypatch.setenv("UPSTOX_ACCESS_TOKEN", ENV_TOKEN)
     frames = [market_info_frame(receipt_ms=int(time.time() * 1000) + i) for i in range(5000)]
     start_stream(owner_token="tab", mode=StreamMode.LIVE, live_transport=ScriptedLiveTransport(frames, delay_sec=0.01), policy=FAST)
@@ -296,8 +380,10 @@ def test_s11_valid_callback_exchanges_server_side_installs_token_and_stops_activ
     for lg in ("", "urllib3", "nifty_lab"):
         logging.getLogger(lg).setLevel(logging.DEBUG)
     with caplog.at_level(logging.DEBUG):
-        result = complete_login(code=AUTH_CODE, state=state, session_key="sess-B", transport=auth_transport(fake))  # callback lands in a new tab/session
-    assert result.ok and result.cross_session is True
+        receive_callback(code=AUTH_CODE, state=state)  # lands in the new tab's session
+        assert worker_threads_alive() >= 1  # receiving a callback changes nothing yet
+        result = complete_login(state=state, session_key="sess-A", transport=auth_transport(fake))  # original tab completes
+    assert result.ok
     call = fake.calls[0]
     assert call["url"] == "https://api.upstox.com/v2/login/authorization/token"
     assert call["data"] == {"code": AUTH_CODE, "client_id": CLIENT_ID, "client_secret": CLIENT_SECRET, "redirect_uri": REDIRECT, "grant_type": "authorization_code"}
@@ -305,7 +391,6 @@ def test_s11_valid_callback_exchanges_server_side_installs_token_and_stops_activ
     tok = resolve_access_token()
     assert tok.value == NEW_TOKEN and tok.source == "managed" and tok.expires_at == expiry_after(tok.issued_at)
     assert read_access_token() == NEW_TOKEN  # existing clients pick up the replacement on their next request
-    # the active stream was stopped and must be started explicitly
     while worker_threads_alive():
         time.sleep(0.01)
     snap = active_snapshot(owner_token="tab")
@@ -313,6 +398,7 @@ def test_s11_valid_callback_exchanges_server_side_installs_token_and_stops_activ
     assert_clean(result.message + snap.fault.message)
     for rec in caplog.records:
         assert_clean(rec.getMessage())
+    assert state not in ua._PENDING  # consumed; the code is no longer held anywhere
 
 
 def test_s12_exchange_failure_keeps_existing_credential_and_is_sanitized(monkeypatch):
@@ -320,17 +406,18 @@ def test_s12_exchange_failure_keeps_existing_credential_and_is_sanitized(monkeyp
     body = {"errors": [{"errorCode": "UDAPI100057", "message": f"bad code {AUTH_CODE}", "propertyPath": None}]}
     fake = FakeTokenSession(400, body)
     _, state = begin_login(session_key="s")
+    receive_callback(code=AUTH_CODE, state=state)
     with pytest.raises(LoginError) as exc:
-        complete_login(code=AUTH_CODE, state=state, session_key="s", transport=auth_transport(fake))
+        complete_login(state=state, session_key="s", transport=auth_transport(fake))
     assert "authorization code" in str(exc.value).lower()
     assert_clean(str(exc.value))
     assert resolve_access_token().value == ENV_TOKEN  # untouched
     assert default_store().read() is None
-    # malformed success payload (no access_token) is also a failure that changes nothing
-    fake2 = FakeTokenSession(200, {"status": "success"})
+    fake2 = FakeTokenSession(200, {"status": "success"})  # malformed success payload changes nothing either
     _, state2 = begin_login(session_key="s")
+    receive_callback(code=AUTH_CODE, state=state2)
     with pytest.raises(LoginError):
-        complete_login(code=AUTH_CODE, state=state2, session_key="s", transport=auth_transport(fake2))
+        complete_login(state=state2, session_key="s", transport=auth_transport(fake2))
     assert resolve_access_token().value == ENV_TOKEN
 
 
@@ -350,64 +437,89 @@ def test_s14_pending_logins_are_bounded_and_expire():
 
 # ============================================================================ R4 Settings page (AppTest)
 
-def test_s15_settings_page_shows_status_and_processes_callback_without_exposing_values(monkeypatch):
+PAGE = str(Path(__file__).resolve().parents[1] / "pages" / "10_Settings_and_API_Connections.py")
+
+
+def _texts(at) -> str:
+    return "\n".join([m.value for m in at.markdown] + [c.value for c in at.caption] + [s.value for s in at.success] + [i.value for i in at.info] + [w.value for w in at.warning] + [e.value for e in at.error])
+
+
+def test_s15_settings_flow_completes_only_in_the_initiating_session(monkeypatch):
     pytest.importorskip("streamlit.testing.v1", exc_type=ImportError)
     from streamlit.testing.v1 import AppTest
 
     from nifty_lab.ui import upstox_auth_ui as aui
 
     monkeypatch.setenv("UPSTOX_ACCESS_TOKEN", ENV_TOKEN)
-    monkeypatch.setattr(aui, "_request_host", lambda: "localhost:8501")
+    monkeypatch.setattr(aui, "_listener_address", lambda: "127.0.0.1")
     fake = FakeTokenSession()
     monkeypatch.setattr(aui, "UpstoxAuthTransport", lambda: auth_transport(fake))
-    page = str(Path(__file__).resolve().parents[1] / "pages" / "10_Settings_and_API_Connections.py")
 
-    at = AppTest.from_file(page)
-    at.run(timeout=60)
-    assert not at.exception
-    page_text = "\n".join(m.value for m in at.markdown) + "\n".join(c.value for c in at.caption)
-    assert "Status: not verified" in page_text and "source: environment" in page_text
-    assert_clean(page_text)
-
-    # Reconnect → link rendered, state registered
-    next(b for b in at.button if b.label == "Reconnect Upstox").click().run(timeout=60)
-    assert not at.exception
-    assert len(ua._PENDING) == 1
+    at1 = AppTest.from_file(PAGE)
+    at1.run(timeout=60)
+    assert not at1.exception
+    t = _texts(at1)
+    assert "Status: not verified" in t and "source: environment" in t
+    assert_clean(t)
+    next(b for b in at1.button if b.label == "Reconnect Upstox").click().run(timeout=60)
+    assert not at1.exception and len(ua._PENDING) == 1
     state = next(iter(ua._PENDING))
+    assert any(b.label.startswith("Complete reconnection") for b in at1.button)
 
-    # Callback arrives (new session in practice): code/state in query params → exchanged, cleared, token installed
-    at2 = AppTest.from_file(page)
+    # callback lands in a different tab/session: nothing is exchanged or installed there
+    at2 = AppTest.from_file(PAGE)
     at2.query_params["code"] = AUTH_CODE
     at2.query_params["state"] = state
     at2.run(timeout=60)
     assert not at2.exception
     assert "code" not in at2.query_params and "state" not in at2.query_params
-    assert fake.calls and fake.calls[0]["data"]["code"] == AUTH_CODE
-    assert any("Upstox reconnected" in s.value for s in at2.success)
-    text2 = "\n".join(m.value for m in at2.markdown) + "\n".join(c.value for c in at2.caption) + "\n".join(s.value for s in at2.success)
-    assert "source: managed" in text2 and "03:30" in text2
-    assert_clean(text2)
-    assert resolve_access_token().value == NEW_TOKEN
+    assert fake.calls == [] and default_store().read() is None
+    assert "original" in _texts(at2).lower()
+    assert_clean(_texts(at2))
 
-    # replaying the same callback is rejected and changes nothing
-    at3 = AppTest.from_file(page)
+    # replaying the callback is rejected
+    at3 = AppTest.from_file(PAGE)
     at3.query_params["code"] = AUTH_CODE
     at3.query_params["state"] = state
     at3.run(timeout=60)
-    assert not at3.exception and any("already used" in e.value for e in at3.error)
-    assert len(fake.calls) == 1
+    assert not at3.exception and any("already" in e.value for e in at3.error) and fake.calls == []
+
+    # the initiating tab completes explicitly
+    next(b for b in at1.button if b.label.startswith("Complete reconnection")).click().run(timeout=60)
+    assert not at1.exception
+    assert len(fake.calls) == 1 and fake.calls[0]["data"]["code"] == AUTH_CODE
+    t = _texts(at1)
+    assert "Upstox reconnected" in t and "source: managed" in t and "03:30" in t
+    assert_clean(t)
+    assert resolve_access_token().value == NEW_TOKEN
 
 
-def test_s16_reconnect_controls_hidden_off_loopback(monkeypatch):
+def test_s16_oauth_processing_refused_unless_listener_is_loopback(monkeypatch):
     pytest.importorskip("streamlit.testing.v1", exc_type=ImportError)
     from streamlit.testing.v1 import AppTest
 
     from nifty_lab.ui import upstox_auth_ui as aui
 
-    monkeypatch.setattr(aui, "_request_host", lambda: "192.168.1.20:8501")
-    page = str(Path(__file__).resolve().parents[1] / "pages" / "10_Settings_and_API_Connections.py")
-    at = AppTest.from_file(page)
-    at.run(timeout=60)
-    assert not at.exception
-    assert not any(b.label == "Reconnect Upstox" for b in at.button)
-    assert any("localhost" in i.value for i in at.info)
+    monkeypatch.setenv("UPSTOX_ACCESS_TOKEN", ENV_TOKEN)
+    fake = FakeTokenSession()
+    monkeypatch.setattr(aui, "UpstoxAuthTransport", lambda: auth_transport(fake))
+    _, state = begin_login(session_key="x")
+    frames = [market_info_frame(receipt_ms=int(time.time() * 1000) + i) for i in range(5000)]
+    start_stream(owner_token="tab", mode=StreamMode.LIVE, live_transport=ScriptedLiveTransport(frames, delay_sec=0.01), policy=FAST)
+    for address in (None, "", "0.0.0.0", "192.168.1.20"):
+        monkeypatch.setattr(aui, "_listener_address", lambda a=address: a)
+        at = AppTest.from_file(PAGE)
+        at.query_params["code"] = AUTH_CODE
+        at.query_params["state"] = state
+        at.run(timeout=60)
+        assert not at.exception
+        assert not any(b.label == "Reconnect Upstox" for b in at.button)
+        assert "code" not in at.query_params
+        assert fake.calls == [] and default_store().read() is None and ua._PENDING[state].code is None
+        assert worker_threads_alive() >= 1  # stream untouched
+        assert any("loopback" in e.value.lower() for e in at.error)
+    # a client-controlled Host header plays no part in the decision
+    monkeypatch.setattr(aui, "_listener_address", lambda: "0.0.0.0")
+    assert aui.oauth_access_allowed() is False
+    monkeypatch.setattr(aui, "_listener_address", lambda: "::1")
+    assert aui.oauth_access_allowed() is True

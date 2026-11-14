@@ -12,4 +12,11 @@ Status: IMPLEMENTED (2026-11-14). Evidence in `handoff.md`.
 - [x] Spec 15 operator smoke handoff (baseline vs later check).
 - [x] Final full suite; focused commits to main; normal push.
 
+## Review corrections (2026-11-14, second pass)
+- [x] Loopback-listener gate enforced before login initiation and callback processing (config-based, not Host header); `.streamlit/config.toml` binds `127.0.0.1`.
+- [x] Two-step receive/complete binding: exchange only in the initiating session; wrong session refused; approval replay refused.
+- [x] Known-expired managed token never resurrected through an identical environment token; different env credential documented.
+- [x] Rejection/expiry marks durable (never cleared by success); shared per-path lock + `fcntl` file lock for concurrent writers.
+- [x] Tests S05 (extended), S10 (+replayed completion), S11, S15, S16, S17, S18, S19; full suite rerun.
+
 Not done by design: real renewal (needs an attended owner approval); webhook/approval path; TOTP path.
