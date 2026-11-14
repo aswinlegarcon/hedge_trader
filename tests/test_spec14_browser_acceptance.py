@@ -53,14 +53,13 @@ def expected_replay_series() -> list[list[float]]:
     return [[r["time"], r["open"], r["high"], r["low"], r["close"]] for r in book.chart_series()]
 
 
-@pytest.fixture(scope="module")
-def streamlit_url(tmp_path_factory):
+def _start_streamlit(tmp_path_factory, prefix: list[str]):
     with socket.socket() as probe:
         probe.bind(("127.0.0.1", 0))
         port = probe.getsockname()[1]
     log = (tmp_path_factory.mktemp("streamlit") / "server.log").open("w")
     proc = subprocess.Popen(
-        [sys.executable, "-c", LAUNCHER, str(PAGE), "--server.headless", "true",
+        [*prefix, str(PAGE), "--server.headless", "true",
          "--server.address", "127.0.0.1", "--server.port", str(port),
          "--server.fileWatcherType", "none", "--browser.gatherUsageStats", "false"],
         cwd=PROJECT_ROOT, env={**os.environ, "NSL_FORBID_LIVE_MUTATIONS": "1"}, stdout=log, stderr=log,
@@ -80,6 +79,18 @@ def streamlit_url(tmp_path_factory):
     proc.terminate()
     proc.wait(timeout=15)
     log.close()
+
+
+@pytest.fixture(scope="module")
+def streamlit_url(tmp_path_factory):
+    """Real Streamlit, REPLAY pacing slowed to 2.0s/frame (test server only) for the mid-stream zoom test."""
+    yield from _start_streamlit(tmp_path_factory, [sys.executable, "-c", LAUNCHER])
+
+
+@pytest.fixture(scope="module")
+def streamlit_url_shipped(tmp_path_factory):
+    """Real Streamlit exactly as shipped: production REPLAY pacing, no patches."""
+    yield from _start_streamlit(tmp_path_factory, [sys.executable, "-m", "streamlit", "run"])
 
 
 @pytest.fixture(scope="module")
@@ -180,4 +191,28 @@ def test_streamlit_replay_chart_matches_server_candles(streamlit_url, page):
     frame.wait_for_function(f"(exp) => {SLOT} && ({MATCHES})(exp, {SERIES})", arg=expected, timeout=30_000)
     times = frame.evaluate(f"() => {TIMES}")
     assert times == sorted(set(times)) and len(times) == len(expected)  # fresh instance, no leftovers
+    assert errors == []
+
+
+def test_streamlit_shipped_pacing_updates_and_restarts(streamlit_url_shipped, page):
+    """Unpatched page at shipped pacing: Start → chart converges to the server candles and the session reports
+    stopped → Stop unmounts → Start again converges on a fresh instance. Readiness is observed, never slept."""
+    pg, errors = page
+    expected = expected_replay_series()
+    pg.goto(streamlit_url_shipped)
+    pg.get_by_role("button", name="Start stream").click()
+    frame = wait_component_frame(pg)
+    frame.wait_for_function(f"(exp) => {SLOT} && ({MATCHES})(exp, {SERIES})", arg=expected, timeout=30_000)
+    inst0 = frame.evaluate(f"() => {SLOT}.instanceId")
+    expect(pg.get_by_text("Auto-refresh · stopped")).to_be_visible(timeout=15_000)  # REPLAY ran to completion
+    assert frame.evaluate(f"() => [{SLOT}.instanceId, {SERIES}]") == [inst0, expected]
+
+    pg.get_by_role("button", name="Stop stream").click()
+    expect(pg.locator(IFRAME)).to_have_count(0, timeout=30_000)
+    pg.get_by_role("button", name="Start stream").click()
+    frame = wait_component_frame(pg)
+    frame.wait_for_function(f"(exp) => {SLOT} && ({MATCHES})(exp, {SERIES})", arg=expected, timeout=30_000)
+    expect(pg.get_by_text("Auto-refresh · stopped")).to_be_visible(timeout=15_000)
+    inst1, times = frame.evaluate(f"() => [{SLOT}.instanceId, {TIMES}]")
+    assert inst1 != inst0 and times == sorted(set(times)) and len(times) == len(expected)
     assert errors == []
