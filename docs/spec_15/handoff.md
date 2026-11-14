@@ -133,6 +133,12 @@ Protobuf: the vendored `MarketDataFeedV3_pb2.py` validates runtime ≥ 7.36.2 (s
 
 **READY_FOR_OPERATOR_SMOKE** — every normative scenario S01–S25 has a passing automated test or recorded evidence; no xfail/skip hides any of them. Not LIVE_VERIFIED.
 
+## Post-handoff: operator smoke performed (2026-11-14)
+
+See `docs/spec_15/operator-smoke-handoff.md`. The baseline run exposed that an empty intraday bootstrap on a closed market
+was treated as a terminal `TRANSPORT_FAILED`; fixed (empty bootstrap → 0 bars + coverage note; other bootstrap failures →
+`BOOTSTRAP_FAILED`), after which the later check reached **CONNECTIVITY_ONLY** against the real feed.
+
 ## Operator runbook (to be executed only after reviewer acceptance; not performed in this task)
 
 Preconditions: one attended operator, one browser tab, this `requirements.txt` environment, fresh `UPSTOX_ACCESS_TOKEN` in local `.env` (never pasted elsewhere), `NSL_FORBID_LIVE_MUTATIONS=1`, default logging (no DEBUG). Validate market availability from the page's provider exchange status, not from the weekday. **Max 10 minutes streaming / 15 minutes wall clock.**

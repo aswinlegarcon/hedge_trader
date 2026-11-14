@@ -4,6 +4,7 @@ from __future__ import annotations
 from datetime import datetime, timezone
 
 from nifty_lab.brokers.upstox_candles import INTERVAL_5M, CandleIntervalSpec, candles_to_frame, parse_candle_response
+from nifty_lab.brokers.upstox_errors import UpstoxEmptyError
 from nifty_lab.brokers.upstox_instruments import encode_instrument_key
 from nifty_lab.brokers.upstox_transport import API_HOST, HttpTransport, build_auth_header
 from nifty_lab.brokers.upstox_market_data import read_access_token
@@ -21,7 +22,11 @@ def fetch_intraday_bootstrap(transport: HttpTransport) -> list[CandleBar]:
     if status != 200:
         raise RuntimeError(f"Bootstrap candle request failed ({status}).")
     spec = CandleIntervalSpec(INTERVAL_5M.unit, INTERVAL_5M.interval, INTERVAL_5M.label)
-    frame = candles_to_frame(parse_candle_response(body), spec=spec)
+    try:
+        candles = parse_candle_response(body)
+    except UpstoxEmptyError:
+        return []  # closed market / pre-open: no intraday candles yet is a valid, empty bootstrap
+    frame = candles_to_frame(candles, spec=spec)
     bars: list[CandleBar] = []
     for ts, row in frame.iterrows():
         dt = ts.to_pydatetime() if hasattr(ts, "to_pydatetime") else datetime.fromisoformat(str(ts))

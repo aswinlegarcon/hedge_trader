@@ -25,7 +25,7 @@ from nifty_lab.brokers.upstox_errors import UpstoxAuthError
 from nifty_lab.brokers.upstox_transport import HttpTransport
 
 from .bootstrap import fetch_intraday_bootstrap
-from .candles import CandleBook
+from .candles import CandleBook, CoverageNote
 from .constants import (
     IDLE_SESSION_SEC,
     INSTRUMENT_KEY,
@@ -290,6 +290,8 @@ class StreamSession:
         with self._lock:
             self.book.merge_bootstrap(bars)
             self.bootstrap_count = len(bars)
+            if not bars:
+                self.book.coverage_notes.append(CoverageNote("bootstrap", "No intraday candles returned (market closed or pre-open); streaming without bootstrap bars."))
 
     def _set_terminal(self, state: ConnectionState, fault: StreamFault | None) -> None:
         with self._lock:
@@ -307,8 +309,12 @@ class StreamSession:
         try:
             try:
                 self._bootstrap()
-            except Exception as exc:  # noqa: BLE001 — bootstrap is one attempt per Start
+            except (FeedAuthError, UpstoxAuthError) as exc:  # bootstrap is one attempt per Start
                 self._set_terminal(ConnectionState.ERROR, sanitize_exception(exc))
+                return
+            except Exception as exc:  # noqa: BLE001
+                category = sanitize_exception(exc).code.value
+                self._set_terminal(ConnectionState.ERROR, StreamFault(StreamErrorCode.BOOTSTRAP_FAILED, f"Intraday bootstrap failed ({category}). Nothing was streamed."))
                 return
             while not self._stop.is_set():
                 try:

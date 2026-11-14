@@ -584,3 +584,38 @@ def test_s18_status_lines_report_stale_waiting_stopping_fault_and_exchange_witho
     assert "synthetic" in replay and "FRESH" not in replay
     gap = _texts(_snap(freshness=Freshness.FRESH, source_age_sec=1.0, progress_age_sec=1.0, reconnect_gap=True, reconnect_attempt=1))
     assert "Reconnect gap recorded" in gap
+
+
+# ============================================================================ bootstrap on a non-trading day (operator smoke finding)
+
+class RoutedSession:
+    """requests.Session stand-in that answers by URL substring."""
+
+    def __init__(self, routes: dict[str, tuple[int, bytes]]) -> None:
+        self.routes, self.calls = routes, []
+
+    def get(self, url, *, headers, timeout, allow_redirects):
+        self.calls.append(url)
+        for needle, (status, body) in self.routes.items():
+            if needle in url:
+                return FakeResponse(status, body)
+        return FakeResponse(404, b"{}")
+
+
+def test_empty_intraday_bootstrap_on_closed_market_is_zero_bars_not_an_error():
+    fake = RoutedSession({"/historical-candle/intraday/": (200, b'{"status":"success","data":{"candles":[]}}'), "/authorize": (200, b'{"data":{"authorizedRedirectUri":"https://not-wss"}}')})
+    start_stream(owner_token="wk", mode=StreamMode.LIVE, http=RequestsTransport(session=fake), policy=FAST)  # type: ignore[arg-type]
+    snap = wait_state("wk", ConnectionState.ERROR)  # the stubbed authorize is deliberately invalid → proves we got past bootstrap
+    assert snap.fault is not None and snap.fault.code.value == "FEED_AUTHORIZE_INVALID"
+    assert snap.bootstrap_count == 0 and snap.book is not None
+    assert any(n.kind == "bootstrap" for n in snap.book.coverage_notes)
+    assert [u for u in fake.calls if "/authorize" in u]  # feed connection was attempted after the empty bootstrap
+
+
+def test_non_auth_bootstrap_failure_is_reported_as_bootstrap_failed():
+    fake = RoutedSession({"/historical-candle/intraday/": (200, b'{"data":{"candles":"not-a-list"}}')})
+    start_stream(owner_token="bf", mode=StreamMode.LIVE, http=RequestsTransport(session=fake), policy=FAST)  # type: ignore[arg-type]
+    snap = wait_state("bf", ConnectionState.ERROR)
+    assert snap.fault is not None and snap.fault.code.value == "BOOTSTRAP_FAILED"
+    assert_sanitized(snap.fault.message)
+    assert len(fake.calls) == 1  # one attempt, no feed connection
