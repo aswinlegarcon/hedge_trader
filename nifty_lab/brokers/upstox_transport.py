@@ -63,8 +63,9 @@ class RequestsTransport:
         except requests.RequestException as exc:
             raise UpstoxUnavailableError("Network error. Check connectivity and retry.") from exc
         self._last_request_at = time.monotonic()
+        _note_auth_outcome(hdrs.get("Authorization"), resp.status_code)
         if resp.status_code in (401, 403):
-            raise UpstoxAuthError("Authentication failed. Set a fresh UPSTOX_ACCESS_TOKEN locally and restart.")
+            raise UpstoxAuthError("Authentication failed (token rejected). Reconnect Upstox in Settings & API Connections.")
         if resp.status_code == 429:
             raise UpstoxRateLimitError("Rate limited. Wait and use manual refresh.")
         if resp.status_code >= 500:
@@ -72,6 +73,16 @@ class RequestsTransport:
         if resp.status_code >= 400:
             raise UpstoxDataError(f"Request rejected ({resp.status_code}). Check instrument and date range.")
         return resp.status_code, resp.content, {k.lower(): v for k, v in resp.headers.items()}
+
+
+def _note_auth_outcome(authorization: str | None, status_code: int) -> None:
+    """Spec 16: mark the presented token rejected (401/403) or verified (2xx) by fingerprint; never stores values."""
+    try:
+        from .upstox_auth import note_response
+
+        note_response(authorization, status_code)
+    except Exception:  # noqa: BLE001 — marks are best-effort; never break a data call
+        pass
 
 
 def build_auth_header(token: str) -> dict[str, str]:

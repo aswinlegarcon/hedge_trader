@@ -486,6 +486,19 @@ def stop_stream(*, owner_token: str | None = None, session_id: str | None = None
         return snap
 
 
+def stop_for_credential_change() -> bool:
+    """Spec 16: credentials are being replaced — stop whatever is active regardless of owner. Returns True if a
+    running session was asked to stop. The next session requires an explicit Start with the new credential."""
+    with _OWNER_LOCK:
+        if _ACTIVE is None or not _ACTIVE.is_worker_alive():
+            return False
+        with _ACTIVE._lock:
+            _ACTIVE.fault = StreamFault(StreamErrorCode.CREDENTIALS_REPLACED, "Upstox credentials were replaced; this stream was stopped. Press Start to resume with the new token.")
+        _ACTIVE.request_stop()
+        _ACTIVE.join_monitor()
+        return True
+
+
 def keepalive(*, owner_token: str, session_id: str | None = None) -> bool:
     """Renew the owner lease. Only the current owner (and generation, if given) of a live session may renew."""
     with _OWNER_LOCK:

@@ -52,22 +52,28 @@ ACCESS_STATE = UpstoxAccessState()
 
 
 def _token_present() -> bool:
-    val = os.getenv("UPSTOX_ACCESS_TOKEN", "")
-    if not val.strip():
-        return False
-    lower = val.lower()
-    return not any(m in lower for m in _PLACEHOLDER_MARKERS)
+    """A usable (not rejected, not expired) token exists in the managed store or the environment."""
+    from .upstox_auth import resolve_access_token
+
+    return resolve_access_token() is not None
 
 
 def read_access_token() -> str:
-    if not _token_present():
-        raise UpstoxAuthError("Set UPSTOX_ACCESS_TOKEN in .env locally, then restart the app.")
-    return os.environ["UPSTOX_ACCESS_TOKEN"].strip()
+    from .upstox_auth import AuthStatus, auth_status, resolve_access_token
+
+    tok = resolve_access_token()
+    if tok is None:
+        if auth_status().status == AuthStatus.REAUTH_REQUIRED:
+            raise UpstoxAuthError("Upstox rejected the configured token. Reconnect Upstox in Settings & API Connections.")
+        raise UpstoxAuthError("No Upstox access token. Reconnect Upstox in Settings & API Connections (or set UPSTOX_ACCESS_TOKEN in .env).")
+    return tok.value
 
 
 def connection_generation() -> int:
-    """Non-secret cache generation: 0=no token, 1=token present."""
-    return 1 if _token_present() else 0
+    """Non-secret cache generation: 0=no usable token, else changes whenever the active token changes."""
+    from .upstox_auth import connection_generation as _gen
+
+    return _gen()
 
 
 @dataclass

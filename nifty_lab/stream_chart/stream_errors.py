@@ -25,6 +25,7 @@ class StreamErrorCode(str, Enum):
     OWNER_CONFLICT = "OWNER_CONFLICT"
     TRANSPORT_FAILED = "TRANSPORT_FAILED"
     OWNER_EXPIRED = "OWNER_EXPIRED"
+    CREDENTIALS_REPLACED = "CREDENTIALS_REPLACED"
     STOPPED = "STOPPED"
 
 
@@ -38,7 +39,9 @@ def sanitize_exception(exc: BaseException) -> StreamFault:
     if isinstance(exc, FeedAuthError):
         return StreamFault(StreamErrorCode.FEED_AUTH_FAILED, "Feed authorization failed. Check local token.")
     if isinstance(exc, UpstoxAuthError):
-        return StreamFault(StreamErrorCode.FEED_AUTH_FAILED, "Authentication failed. Check local token.")
+        text = str(exc)  # our own static guidance (e.g. "Reconnect Upstox…"); never echoes broker bodies
+        safe = text if text and not any(marker in text for marker in _SECRET_MARKERS) else "Authentication failed. Reconnect Upstox in Settings & API Connections."
+        return StreamFault(StreamErrorCode.FEED_AUTH_FAILED, safe)
     if isinstance(exc, FeedProtocolError):
         return StreamFault(StreamErrorCode.FEED_AUTHORIZE_INVALID, "Feed authorize response invalid.")
     text = str(exc)

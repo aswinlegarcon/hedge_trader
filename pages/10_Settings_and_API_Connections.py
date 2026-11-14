@@ -9,6 +9,7 @@ from nifty_lab.config import PROVISIONAL_WATCHLIST, credential_status, legacy_co
 from nifty_lab.contracts import CONTRACTS
 from nifty_lab.options import DEFAULT_COSTS
 from nifty_lab.ui.common import footer, inr, setup_page
+from nifty_lab.ui.upstox_auth_ui import render_upstox_auth_section
 
 cfg = setup_page("Settings & API Connections")
 
@@ -48,6 +49,8 @@ st.dataframe(
     width="stretch",
 )
 
+render_upstox_auth_section()
+
 st.subheader("Broker (read-only status — Upstox only)")
 for b in ALL_BROKERS:
     s = b.status()
@@ -65,7 +68,7 @@ st.markdown(
 **How to configure (do NOT paste secrets into any chat or into this page):**
 1. Copy `.env.example` to `.env` in the project folder.
 2. Add `UPSTOX_*` placeholders when you are ready for a future read-only integration spec. `.env` is git-ignored.
-3. **Market data (Spec 04):** after OAuth, set `UPSTOX_ACCESS_TOKEN` in `.env`, restart, then use **Upstox → Load/Refresh** in the sidebar. Never paste the token into Streamlit or chat.
+3. **Market data:** use **Reconnect Upstox** above (official login; token installed server-side, no restart). The legacy `UPSTOX_ACCESS_TOKEN` in `.env` still works as the initial path; a managed token takes precedence over it. Never paste a token into Streamlit or chat. See `docs/spec_16/operator-guide.md`.
 4. Legacy Kite/Kotak variables are not used for data access in this build.
 5. Current specs: [spec_03](../spec_03/README.md), [spec_04](../spec_04/README.md). Historical broker notes: [RESEARCH.md](../RESEARCH.md).
 """
