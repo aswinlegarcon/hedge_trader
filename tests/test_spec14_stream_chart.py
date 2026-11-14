@@ -125,7 +125,7 @@ def test_owner_conflict_not_preemptive():
     )
     conflict = start_stream(owner_token="owner-b", mode=StreamMode.REPLAY)
     assert conflict.state == ConnectionState.OWNER_CONFLICT
-    assert worker_threads_alive() == 1
+    assert worker_threads_alive() == 2  # owner-a's I/O worker + its lease monitor; nothing for owner-b
     stop_stream(owner_token="owner-a")
 
 

@@ -2,7 +2,11 @@
 
 **Date:** 2026-11-14 · **Base:** `main` @ `b111e5257212e8b5c73bb7d2a91a5c444f0426c7` · **Scope:** investigation + verification only; no application code changed.
 
-## Verdict: **GO** for one bounded, read-only LIVE smoke test
+> **Superseded (2026-11-14) by Spec 15.** The GO below was the pre-Spec-15 assessment and is retained as historical evidence.
+> Defects F1–F4 and limitations L1–L7 were addressed by `docs/spec_15/` (see `docs/spec_15/handoff.md` for the scenario-to-test
+> table, the tested commit and the current verdict). Operational progression now follows the Spec 15 handoff, not this page.
+
+## Verdict: **GO** for one bounded, read-only LIVE smoke test (historical — superseded, see note above)
 
 GO means the code is ready to *attempt* the smoke test under the procedure below. LIVE streaming itself is **not verified**: the
 production WebSocket path (`websockets 17.4`) has never been executed in this repo — every offline check blocks sockets. The

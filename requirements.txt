@@ -5,4 +5,6 @@ plotly>=5.22
 scipy>=1.13
 python-dotenv>=1.0
 requests>=2.31
+websockets>=13.0,<18
+protobuf>=7.36.2,<8
 pytest>=8.0

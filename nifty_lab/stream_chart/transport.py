@@ -5,43 +5,59 @@ import asyncio
 import json
 import logging
 import threading
-import time
 from collections.abc import Callable
 from typing import Protocol
 
-from nifty_lab.brokers.upstox_transport import API_HOST, HttpTransport, build_auth_header
+from nifty_lab.brokers.upstox_errors import UpstoxAuthError
 from nifty_lab.brokers.upstox_market_data import read_access_token
+from nifty_lab.brokers.upstox_transport import API_HOST, HttpTransport, build_auth_header
 
-from .constants import FEED_AUTHORIZE_PATH, INSTRUMENT_KEY, SUBSCRIBE_MODE
+from .constants import FEED_AUTHORIZE_PATH, INSTRUMENT_KEY, SUBSCRIBE_MODE, WS_CLOSE_TIMEOUT_SEC, WS_OPEN_TIMEOUT_SEC, WS_RECV_POLL_SEC
 from .feed_decode import build_subscribe_frame
-from .stream_errors import FeedAuthError
+from .stream_errors import FeedAuthError, FeedProtocolError
 
+# Dedicated transport logger (Spec 15 design §6). The websockets library logs handshake request lines/headers at
+# DEBUG — those can carry the authorized URI — so this logger never propagates and emits nothing below WARNING,
+# regardless of root/"websockets" logger levels. Application diagnostics stay on the module logger below.
+_WS_LOG = logging.getLogger("nifty_lab.stream_chart.transport.ws")
+_WS_LOG.propagate = False
+_WS_LOG.setLevel(logging.WARNING)
+_WS_LOG.addHandler(logging.NullHandler())
 _LOG = logging.getLogger(__name__)
+
+_LOOPBACK_WS_PREFIXES = ("ws://127.0.0.1:", "ws://localhost:")
 
 
 class RawFeedTransport(Protocol):
     def run(self, *, on_frame: Callable[[bytes], None], stop_event: threading.Event) -> None: ...
 
 
-def fetch_authorized_ws_uri(http: HttpTransport) -> str:
-    token = read_access_token()
+def fetch_authorized_ws_uri(http: HttpTransport, *, allow_loopback_ws: bool = False) -> str:
+    """One authorize attempt. 401/403 (raised or returned) and a missing token → FeedAuthError (non-retryable);
+    unusable 200 payload → FeedProtocolError (non-retryable); other failures propagate as retryable."""
+    token = read_access_token()  # UpstoxAuthError when missing → sanitized auth failure
     url = f"https://{API_HOST}{FEED_AUTHORIZE_PATH}"
-    status, body, _ = http.get(url, headers=build_auth_header(token), allow_redirects=False)
+    try:
+        status, body, _ = http.get(url, headers=build_auth_header(token), allow_redirects=False)
+    except UpstoxAuthError as exc:
+        raise FeedAuthError("Feed authorization rejected.") from exc
     if status in (401, 403):
         raise FeedAuthError("Feed authorization rejected.")
     if status != 200:
-        raise FeedAuthError(f"Feed authorization failed with status {status}.")
+        raise RuntimeError(f"Feed authorize failed with status {status}.")
     try:
         payload = json.loads(body.decode("utf-8"))
     except (json.JSONDecodeError, UnicodeDecodeError) as exc:
-        raise FeedAuthError("Feed authorize returned non-JSON.") from exc
+        raise FeedProtocolError("Feed authorize returned non-JSON.") from exc
     data = payload.get("data") if isinstance(payload, dict) else None
     if not isinstance(data, dict):
-        raise FeedAuthError("Feed authorize missing data.")
+        raise FeedProtocolError("Feed authorize missing data.")
     uri = data.get("authorizedRedirectUri") or data.get("authorized_redirect_uri")
-    if not isinstance(uri, str) or not uri.startswith("wss://"):
-        raise FeedAuthError("Feed authorize missing wss redirect URI.")
-    return uri
+    if not isinstance(uri, str):
+        raise FeedProtocolError("Feed authorize missing redirect URI.")
+    if uri.startswith("wss://") or (allow_loopback_ws and uri.startswith(_LOOPBACK_WS_PREFIXES)):
+        return uri
+    raise FeedProtocolError("Feed authorize redirect URI is not wss.")
 
 
 class ReplayTransport:
@@ -59,23 +75,38 @@ class ReplayTransport:
 
 
 class LiveWebSocketTransport:
-    def __init__(self, http: HttpTransport) -> None:
+    """Authorize over HTTPS (worker thread, outside any event loop), then stream binary frames over WebSocket.
+
+    `allow_loopback_ws` is a test seam for loopback servers only; production builds never set it.
+    """
+
+    def __init__(self, http: HttpTransport, *, allow_loopback_ws: bool = False) -> None:
         self._http = http
+        self._allow_loopback_ws = allow_loopback_ws
 
     def run(self, *, on_frame: Callable[[bytes], None], stop_event: threading.Event) -> None:
         if stop_event.is_set():
             return
-        uri = fetch_authorized_ws_uri(self._http)
+        uri = fetch_authorized_ws_uri(self._http, allow_loopback_ws=self._allow_loopback_ws)
+        if stop_event.is_set():
+            return
         sub = build_subscribe_frame(instrument_keys=[INSTRUMENT_KEY], mode=SUBSCRIBE_MODE)
 
         async def _loop() -> None:
-            import websockets
+            from websockets.asyncio.client import connect
 
-            async with websockets.connect(uri, ping_interval=20, ping_timeout=20) as ws:
-                await ws.send(sub)
+            async with connect(
+                uri,
+                open_timeout=WS_OPEN_TIMEOUT_SEC,
+                close_timeout=WS_CLOSE_TIMEOUT_SEC,
+                ping_interval=20,
+                ping_timeout=20,
+                logger=_WS_LOG,
+            ) as ws:
+                await ws.send(sub)  # bytes → binary frame, as Feed V3 requires
                 while not stop_event.is_set():
                     try:
-                        msg = await asyncio.wait_for(ws.recv(), timeout=1.0)
+                        msg = await asyncio.wait_for(ws.recv(), timeout=WS_RECV_POLL_SEC)
                     except asyncio.TimeoutError:
                         continue
                     if isinstance(msg, bytes):

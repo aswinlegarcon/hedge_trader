@@ -136,6 +136,7 @@ class CandleBook:
                 )
 
         self._seen_keys.add(key)
+        older = bool(self._high_water_trade_ms) and trade_ms < self._high_water_trade_ms
         self._high_water_trade_ms = max(self._high_water_trade_ms, trade_ms)
 
         if self.forming and self.forming.time_epoch != open_epoch:
@@ -154,12 +155,14 @@ class CandleBook:
             )
         else:
             f = self.forming
+            # Older-than-latest trade in the same bucket extends high/low but cannot overwrite the newer close.
+            # Equal timestamps keep the Spec 14 arrival-order policy (later arrival sets close).
             self.forming = CandleBar(
                 time_epoch=f.time_epoch,
                 open=f.open,
                 high=max(f.high, price),
                 low=min(f.low, price),
-                close=price,
+                close=f.close if older else price,
                 complete=False,
                 source="stream",
                 incomplete_coverage=f.incomplete_coverage,
