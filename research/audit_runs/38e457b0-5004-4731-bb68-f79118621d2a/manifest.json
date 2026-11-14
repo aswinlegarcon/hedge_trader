@@ -1,0 +1,118 @@
+{
+  "adjustment_status": "UNKNOWN",
+  "api_version": "Upstox V3 historical-candle",
+  "calendar_coverage": "UNVERIFIED",
+  "fetched_at_utc": "2026-11-13T09:21:30.887847+00:00",
+  "instrument_key": "NSE_EQ|INE090A01021",
+  "interval": "daily",
+  "limitations": [
+    "Three separated monthly samples do not verify continuous 2021\u20132025 coverage.",
+    "NSE session calendar not sourced in-repo; weekday gaps are candidate missing sessions, not confirmed.",
+    "Corporate-action / adjusted-price status is UNKNOWN; smooth series are not evidence of adjustment.",
+    "Single-symbol ICICIBANK sample is not a survivorship-free universe.",
+    "No strategy signals, outcomes or parameter search were run.",
+    "November 2026 is excluded from historical samples."
+  ],
+  "manifest_schema_version": "spec09_historical_audit_v1",
+  "overall_status": "FEASIBLE_SAMPLE",
+  "request_budget": {
+    "historical_attempted": 3,
+    "historical_limit": 3,
+    "master_attempted": 1,
+    "master_limit": 1
+  },
+  "research_boundaries_declared": {
+    "2021_2023": "development (not verified by this sample alone)",
+    "2024": "validation (not fetched in this audit)",
+    "2025": "final holdout (December sample only; untouched for strategy tuning)"
+  },
+  "run_id": "38e457b0-5004-4731-bb68-f79118621d2a",
+  "symbol": "ICICIBANK",
+  "timezone_interpretation": "Asia/Kolkata",
+  "windows": [
+    {
+      "adjustment_status": "UNKNOWN",
+      "calendar_coverage": "UNVERIFIED",
+      "data_hash": "b693249b5207c2de7b795d00023fa115180dd034b7cca884ff357f140b80fb50",
+      "error_class": null,
+      "http_status": 200,
+      "max_source_date": "2021-01-29",
+      "min_source_date": "2021-01-01",
+      "notes": [],
+      "raw_audit": {
+        "accepted_count": 20,
+        "duplicate_conflicting": 0,
+        "duplicate_identical": 0,
+        "finding_codes": [],
+        "invalid_ohlc": 0,
+        "invalid_volume": 0,
+        "out_of_range": 0,
+        "raw_row_count": 20,
+        "rejected_count": 0,
+        "zero_volume_flags": 0
+      },
+      "requested_from": "2021-01-01",
+      "requested_to": "2021-01-31",
+      "research_role": "development_sample",
+      "row_count_normalized": 20,
+      "status": "FEASIBLE_SAMPLE",
+      "window_key": "2021-01-01_2021-01-31"
+    },
+    {
+      "adjustment_status": "UNKNOWN",
+      "calendar_coverage": "UNVERIFIED",
+      "data_hash": "0f07c85eac05893c07f4f08d6b42630e271f27acd964d5ebf0b5ede6b0eb1a66",
+      "error_class": null,
+      "http_status": 200,
+      "max_source_date": "2023-01-31",
+      "min_source_date": "2023-01-02",
+      "notes": [],
+      "raw_audit": {
+        "accepted_count": 21,
+        "duplicate_conflicting": 0,
+        "duplicate_identical": 0,
+        "finding_codes": [],
+        "invalid_ohlc": 0,
+        "invalid_volume": 0,
+        "out_of_range": 0,
+        "raw_row_count": 21,
+        "rejected_count": 0,
+        "zero_volume_flags": 0
+      },
+      "requested_from": "2023-01-01",
+      "requested_to": "2023-01-31",
+      "research_role": "development_sample",
+      "row_count_normalized": 21,
+      "status": "FEASIBLE_SAMPLE",
+      "window_key": "2023-01-01_2023-01-31"
+    },
+    {
+      "adjustment_status": "UNKNOWN",
+      "calendar_coverage": "UNVERIFIED",
+      "data_hash": "61182b0c1580e3b488a7c2eb84fd6db6c13d8f63b3d997f8dd84b00f6e5e22d2",
+      "error_class": null,
+      "http_status": 200,
+      "max_source_date": "2025-12-31",
+      "min_source_date": "2025-12-01",
+      "notes": [],
+      "raw_audit": {
+        "accepted_count": 22,
+        "duplicate_conflicting": 0,
+        "duplicate_identical": 0,
+        "finding_codes": [],
+        "invalid_ohlc": 0,
+        "invalid_volume": 0,
+        "out_of_range": 0,
+        "raw_row_count": 22,
+        "rejected_count": 0,
+        "zero_volume_flags": 0
+      },
+      "requested_from": "2025-12-01",
+      "requested_to": "2025-12-31",
+      "research_role": "holdout_feasibility_sample",
+      "row_count_normalized": 22,
+      "status": "FEASIBLE_SAMPLE",
+      "window_key": "2025-12-01_2025-12-31"
+    }
+  ]
+}

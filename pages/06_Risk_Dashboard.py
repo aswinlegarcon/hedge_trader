@@ -12,7 +12,12 @@ cfg = setup_page("Risk Dashboard")
 journal = get_journal(cfg)
 r = cfg.risk
 
-st.caption("All figures below come from the PAPER journal. They are simulations and are kept separate from any real account.")
+st.caption(
+    "Figures below come from the PAPER journal (simulations). They do **not** supply reconciled account valuation for funded-paper "
+    "qualification — marks default to zero for dashboard display only."
+)
+if cfg.legacy_env_conflict:
+    st.warning("Legacy NSL_* overrides — funded-paper qualification disabled (Settings).")
 
 open_df = journal.entries(status="OPEN")
 closed_df = journal.entries(status="CLOSED")
@@ -77,7 +82,7 @@ else:
 st.subheader("Risk rules in force")
 st.write(
     f"""
-- Per-position max contractual loss (incl. estimated costs): **{inr(r.risk_per_trade_min)} – {inr(r.risk_per_trade_max)}**
+- Profile **{cfg.profile_id}** · per-position max contractual loss: **{"unconfirmed" if r.risk_per_trade_max is None else inr(r.risk_per_trade_max)}** (no minimum size)
 - Portfolio open-risk cap: **{r.max_portfolio_risk_pct:.0%} of capital = {inr(r.max_portfolio_risk_pct * r.capital)}**
 - Concentration cap per underlying: **{r.max_single_underlying_pct:.0%} = {inr(r.max_single_underlying_pct * r.capital)}**
 - Max open positions: **{r.max_open_positions}** · Max drawdown: **{inr(r.max_drawdown)}** ({r.max_drawdown_pct:.0%})
@@ -86,5 +91,8 @@ st.write(
 - Event-risk warnings come from the manual event calendar (Global News page) until feeds exist.
 """
 )
-st.caption("Daily / weekly risk reports: see the Paper Trading Journal page (report tab). Change the budget via .env (NSL_* variables).")
+st.caption(
+    "Daily / weekly risk reports: Paper Trading Journal. Active profile is ₹20,000 / ₹2,000 loss ceiling (Spec 03); "
+    "legacy NSL_* overrides block qualification — see docs/spec_03/."
+)
 footer()

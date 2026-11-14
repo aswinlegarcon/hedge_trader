@@ -19,8 +19,14 @@ PAGES = [
     st.Page("pages/08_Paper_Trading_Journal.py", title="Paper Trading Journal", icon="📓"),
     st.Page("pages/09_Learning_Center.py", title="Learning Center", icon="🎓"),
     st.Page("pages/10_Settings_and_API_Connections.py", title="Settings & API Connections", icon="⚙️"),
+    st.Page("pages/11_Watchlist_Research.py", title="Watchlist Research", icon="📋"),
+    st.Page("pages/12_Trade_Ticket.py", title="Trade Ticket", icon="🎫"),
+    st.Page("pages/13_Paper_Account.py", title="Paper Account", icon="📒"),
 ]
 
 nav = st.navigation(PAGES)
-st.sidebar.markdown("**NIFTY Signal Lab** · v0.1.0 (Phase 1)  \n:red[Read-only · no live orders]")
+st.sidebar.markdown(
+    "**NIFTY Signal Lab** · execution-v1  \n"
+    ":orange[Paper default · Live requires explicit confirm on Trade Ticket]"
+)
 nav.run()

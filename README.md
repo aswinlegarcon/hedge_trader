@@ -1,5 +1,7 @@
 # NIFTY Signal Lab
 
+> **Current direction (Spec 03, 2026-11-13):** ₹20,000 research capital and ₹2,000 total portfolio loss ceiling; **Upstox-only** offline broker status; funded-paper qualification is fail-closed until reconciled valuation exists. See [docs/spec_03/README.md](docs/spec_03/README.md). Historical specs remain under `docs/` for traceability.
+
 A read-only, beginner-friendly market-research platform for Indian index options: technical analysis,
 transparent rule-based signals, defined-risk option payoff analysis with a hard risk-budget gate, and a
 SQLite paper-trading journal.

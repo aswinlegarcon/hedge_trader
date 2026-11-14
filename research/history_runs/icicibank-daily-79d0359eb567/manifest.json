@@ -1,0 +1,293 @@
+{
+  "manifest_schema_version": "spec09_full_daily_history_v1",
+  "dataset_id": "icicibank-daily-79d0359eb567",
+  "invocation_id": "c4eb5407-0431-4876-bdfe-ac0025bbca65",
+  "fetched_at_utc": "2026-11-13T09:37:27.934969+00:00",
+  "config_hash": "79d0359eb567524d896633b790c35c63c356910cc5e8cac9c4c30ccf3919d6c6",
+  "symbol": "ICICIBANK",
+  "instrument_key": "NSE_EQ|INE090A01021",
+  "api_version": "Upstox V3 historical-candle",
+  "interval": "days/1",
+  "timezone_interpretation": "Asia/Kolkata",
+  "readiness": {
+    "acquisition": "COMPLETE",
+    "quality": "LIMITED",
+    "calendar_coverage": "UNVERIFIED",
+    "adjustment_status": "UNKNOWN",
+    "backtest_eligibility": "EXPLORATORY_ONLY"
+  },
+  "split_coverage": {
+    "development": "data_acquired_for_split",
+    "validation": "data_acquired_for_split",
+    "holdout": "data_acquired_for_split"
+  },
+  "merged_data_hash": "9c1a7e2b6f0d8137597d359ad34a4b58fa4033321040f263b8ea61d769a60b3e",
+  "request_budget": {
+    "invocation_historical_attempted": 5,
+    "invocation_historical_limit": 5,
+    "dataset_historical_attempted": 5,
+    "dataset_historical_limit": 10,
+    "invocation_master_attempted": 0,
+    "invocation_master_limit": 1,
+    "dataset_master_attempted": 0,
+    "per_chunk_attempts": {
+      "2021": 1,
+      "2022": 1,
+      "2023": 1,
+      "2024": 1,
+      "2025": 1
+    }
+  },
+  "chunks": [
+    {
+      "chunk_year": "2021",
+      "from_date": "2021-01-01",
+      "to_date": "2021-12-31",
+      "status": "COMPLETED",
+      "http_status": 200,
+      "error_class": null,
+      "min_source_date": "2021-01-01",
+      "max_source_date": "2021-12-31",
+      "row_count_normalized": 248,
+      "data_hash": "07d578afb541930dc7c1d8d23a6bfdd079c80ec078ed188117a3ec2775fe3f79",
+      "raw_path": "raw_2021.json",
+      "normalized_path": "normalized_2021.json",
+      "quality": {
+        "duplicate_identical": 0,
+        "duplicate_conflicting": 0,
+        "same_date_conflicts": 0,
+        "intraday_rejected": 0,
+        "suspicious_jump_flags": 0,
+        "candidate_weekday_gap_dates": [
+          "2021-01-26",
+          "2021-03-11",
+          "2021-03-29",
+          "2021-04-02",
+          "2021-04-14",
+          "2021-04-21",
+          "2021-05-13",
+          "2021-07-21",
+          "2021-08-19",
+          "2021-09-10",
+          "2021-10-15",
+          "2021-11-05",
+          "2021-11-19"
+        ],
+        "input_order": "descending"
+      },
+      "notes": [
+        "13 candidate weekday gaps (calendar UNVERIFIED)."
+      ]
+    },
+    {
+      "chunk_year": "2022",
+      "from_date": "2022-01-01",
+      "to_date": "2022-12-31",
+      "status": "COMPLETED",
+      "http_status": 200,
+      "error_class": null,
+      "min_source_date": "2022-01-03",
+      "max_source_date": "2022-12-30",
+      "row_count_normalized": 248,
+      "data_hash": "a59f101cfcbfb93b67f384a65be1f213156a0315799a5d2ae8c6ecb51c6235c0",
+      "raw_path": "raw_2022.json",
+      "normalized_path": "normalized_2022.json",
+      "quality": {
+        "duplicate_identical": 0,
+        "duplicate_conflicting": 0,
+        "same_date_conflicts": 0,
+        "intraday_rejected": 0,
+        "suspicious_jump_flags": 0,
+        "candidate_weekday_gap_dates": [
+          "2022-01-26",
+          "2022-03-01",
+          "2022-03-18",
+          "2022-04-14",
+          "2022-04-15",
+          "2022-05-03",
+          "2022-08-09",
+          "2022-08-15",
+          "2022-08-31",
+          "2022-10-05",
+          "2022-10-26",
+          "2022-11-08"
+        ],
+        "input_order": "descending"
+      },
+      "notes": [
+        "12 candidate weekday gaps (calendar UNVERIFIED)."
+      ]
+    },
+    {
+      "chunk_year": "2023",
+      "from_date": "2023-01-01",
+      "to_date": "2023-12-31",
+      "status": "COMPLETED",
+      "http_status": 200,
+      "error_class": null,
+      "min_source_date": "2023-01-02",
+      "max_source_date": "2023-12-29",
+      "row_count_normalized": 246,
+      "data_hash": "9935294fd9fd947027af72486b1c93c8bc36f22c58ec4f4ddc127ef883e9d010",
+      "raw_path": "raw_2023.json",
+      "normalized_path": "normalized_2023.json",
+      "quality": {
+        "duplicate_identical": 0,
+        "duplicate_conflicting": 0,
+        "same_date_conflicts": 0,
+        "intraday_rejected": 0,
+        "suspicious_jump_flags": 0,
+        "candidate_weekday_gap_dates": [
+          "2023-01-26",
+          "2023-03-07",
+          "2023-03-30",
+          "2023-04-04",
+          "2023-04-07",
+          "2023-04-14",
+          "2023-05-01",
+          "2023-06-29",
+          "2023-08-15",
+          "2023-09-19",
+          "2023-10-02",
+          "2023-10-24",
+          "2023-11-14",
+          "2023-11-27",
+          "2023-12-25"
+        ],
+        "input_order": "descending"
+      },
+      "notes": [
+        "15 candidate weekday gaps (calendar UNVERIFIED)."
+      ]
+    },
+    {
+      "chunk_year": "2024",
+      "from_date": "2024-01-01",
+      "to_date": "2024-12-31",
+      "status": "COMPLETED",
+      "http_status": 200,
+      "error_class": null,
+      "min_source_date": "2024-01-01",
+      "max_source_date": "2024-12-31",
+      "row_count_normalized": 249,
+      "data_hash": "0313d176ebc9264a1bfc70521afc43feb04e62397e6e9fdacfdea1b6d75b2aaf",
+      "raw_path": "raw_2024.json",
+      "normalized_path": "normalized_2024.json",
+      "quality": {
+        "duplicate_identical": 0,
+        "duplicate_conflicting": 0,
+        "same_date_conflicts": 0,
+        "intraday_rejected": 0,
+        "suspicious_jump_flags": 0,
+        "candidate_weekday_gap_dates": [
+          "2024-01-22",
+          "2024-01-26",
+          "2024-03-08",
+          "2024-03-25",
+          "2024-03-29",
+          "2024-04-11",
+          "2024-04-17",
+          "2024-05-01",
+          "2024-05-20",
+          "2024-06-17",
+          "2024-07-17",
+          "2024-08-15",
+          "2024-10-02",
+          "2024-11-15",
+          "2024-11-20",
+          "2024-12-25"
+        ],
+        "input_order": "descending"
+      },
+      "notes": [
+        "16 candidate weekday gaps (calendar UNVERIFIED)."
+      ]
+    },
+    {
+      "chunk_year": "2025",
+      "from_date": "2025-01-01",
+      "to_date": "2025-12-31",
+      "status": "COMPLETED",
+      "http_status": 200,
+      "error_class": null,
+      "min_source_date": "2025-01-01",
+      "max_source_date": "2025-12-31",
+      "row_count_normalized": 249,
+      "data_hash": "c252d55b31e60f69bf140222cd89f594cb4901006abccac66218ad34f0e07d0d",
+      "raw_path": "raw_2025.json",
+      "normalized_path": "normalized_2025.json",
+      "quality": {
+        "duplicate_identical": 0,
+        "duplicate_conflicting": 0,
+        "same_date_conflicts": 0,
+        "intraday_rejected": 0,
+        "suspicious_jump_flags": 0,
+        "candidate_weekday_gap_dates": [
+          "2025-02-26",
+          "2025-03-14",
+          "2025-03-31",
+          "2025-04-10",
+          "2025-04-14",
+          "2025-04-18",
+          "2025-05-01",
+          "2025-08-15",
+          "2025-08-27",
+          "2025-10-02",
+          "2025-10-22",
+          "2025-11-05",
+          "2025-12-25"
+        ],
+        "input_order": "descending"
+      },
+      "notes": [
+        "13 candidate weekday gaps (calendar UNVERIFIED)."
+      ]
+    }
+  ],
+  "overlap_comparisons": [
+    {
+      "audit_window": "2021-01-01_2021-01-31",
+      "chunk_year": "2021",
+      "audit_raw_path": "/Users/sanjain/Documents/hedge_trader/research/audit_runs/38e457b0-5004-4731-bb68-f79118621d2a/raw_2021-01-01_2021-01-31.json",
+      "chunk_raw_path": "/Users/sanjain/Documents/hedge_trader/research/history_runs/icicibank-daily-79d0359eb567/raw_2021.json",
+      "audit_hash": "b693249b5207c2de7b795d00023fa115180dd034b7cca884ff357f140b80fb50",
+      "chunk_overlap_hash": "b693249b5207c2de7b795d00023fa115180dd034b7cca884ff357f140b80fb50",
+      "overlap_session_count": 20,
+      "value_mismatch_dates": [],
+      "status": "MATCH",
+      "note": "Overlapping sessions match within tolerance."
+    },
+    {
+      "audit_window": "2023-01-01_2023-01-31",
+      "chunk_year": "2023",
+      "audit_raw_path": "/Users/sanjain/Documents/hedge_trader/research/audit_runs/38e457b0-5004-4731-bb68-f79118621d2a/raw_2023-01-01_2023-01-31.json",
+      "chunk_raw_path": "/Users/sanjain/Documents/hedge_trader/research/history_runs/icicibank-daily-79d0359eb567/raw_2023.json",
+      "audit_hash": "0f07c85eac05893c07f4f08d6b42630e271f27acd964d5ebf0b5ede6b0eb1a66",
+      "chunk_overlap_hash": "0f07c85eac05893c07f4f08d6b42630e271f27acd964d5ebf0b5ede6b0eb1a66",
+      "overlap_session_count": 21,
+      "value_mismatch_dates": [],
+      "status": "MATCH",
+      "note": "Overlapping sessions match within tolerance."
+    },
+    {
+      "audit_window": "2025-12-01_2025-12-31",
+      "chunk_year": "2025",
+      "audit_raw_path": "/Users/sanjain/Documents/hedge_trader/research/audit_runs/38e457b0-5004-4731-bb68-f79118621d2a/raw_2025-12-01_2025-12-31.json",
+      "chunk_raw_path": "/Users/sanjain/Documents/hedge_trader/research/history_runs/icicibank-daily-79d0359eb567/raw_2025.json",
+      "audit_hash": "61182b0c1580e3b488a7c2eb84fd6db6c13d8f63b3d997f8dd84b00f6e5e22d2",
+      "chunk_overlap_hash": "61182b0c1580e3b488a7c2eb84fd6db6c13d8f63b3d997f8dd84b00f6e5e22d2",
+      "overlap_session_count": 22,
+      "value_mismatch_dates": [],
+      "status": "MATCH",
+      "note": "Overlapping sessions match within tolerance."
+    }
+  ],
+  "limitations": [
+    "NSE session calendar not sourced in-repo; weekday gap lists are candidate missing sessions only.",
+    "Corporate-action and price-adjustment status remains UNKNOWN without authoritative evidence.",
+    "Single-symbol ICICIBANK study; not a survivorship-free universe.",
+    "No strategy signals, outcomes, optimization or broker mutations in this slice.",
+    "Candidate jump flags are investigate-only; not split/corporate-action proof."
+  ],
+  "proposed_next_step": "Optional: authoritative calendar/adjustment review before a separately scoped fixed experimental cash-equity backtest."
+}

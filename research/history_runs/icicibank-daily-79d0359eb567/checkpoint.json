@@ -1,0 +1,91 @@
+{
+  "chunks": {
+    "2021": {
+      "attempts": 1,
+      "data_hash": "07d578afb541930dc7c1d8d23a6bfdd079c80ec078ed188117a3ec2775fe3f79",
+      "error_class": null,
+      "from_date": "2021-01-01",
+      "http_status": 200,
+      "max_source_date": "2021-12-31",
+      "min_source_date": "2021-01-01",
+      "normalized_path": "normalized_2021.json",
+      "raw_path": "raw_2021.json",
+      "row_count": 248,
+      "status": "COMPLETED",
+      "to_date": "2021-12-31",
+      "year": "2021"
+    },
+    "2022": {
+      "attempts": 1,
+      "data_hash": "a59f101cfcbfb93b67f384a65be1f213156a0315799a5d2ae8c6ecb51c6235c0",
+      "error_class": null,
+      "from_date": "2022-01-01",
+      "http_status": 200,
+      "max_source_date": "2022-12-30",
+      "min_source_date": "2022-01-03",
+      "normalized_path": "normalized_2022.json",
+      "raw_path": "raw_2022.json",
+      "row_count": 248,
+      "status": "COMPLETED",
+      "to_date": "2022-12-31",
+      "year": "2022"
+    },
+    "2023": {
+      "attempts": 1,
+      "data_hash": "9935294fd9fd947027af72486b1c93c8bc36f22c58ec4f4ddc127ef883e9d010",
+      "error_class": null,
+      "from_date": "2023-01-01",
+      "http_status": 200,
+      "max_source_date": "2023-12-29",
+      "min_source_date": "2023-01-02",
+      "normalized_path": "normalized_2023.json",
+      "raw_path": "raw_2023.json",
+      "row_count": 246,
+      "status": "COMPLETED",
+      "to_date": "2023-12-31",
+      "year": "2023"
+    },
+    "2024": {
+      "attempts": 1,
+      "data_hash": "0313d176ebc9264a1bfc70521afc43feb04e62397e6e9fdacfdea1b6d75b2aaf",
+      "error_class": null,
+      "from_date": "2024-01-01",
+      "http_status": 200,
+      "max_source_date": "2024-12-31",
+      "min_source_date": "2024-01-01",
+      "normalized_path": "normalized_2024.json",
+      "raw_path": "raw_2024.json",
+      "row_count": 249,
+      "status": "COMPLETED",
+      "to_date": "2024-12-31",
+      "year": "2024"
+    },
+    "2025": {
+      "attempts": 1,
+      "data_hash": "c252d55b31e60f69bf140222cd89f594cb4901006abccac66218ad34f0e07d0d",
+      "error_class": null,
+      "from_date": "2025-01-01",
+      "http_status": 200,
+      "max_source_date": "2025-12-31",
+      "min_source_date": "2025-01-01",
+      "normalized_path": "normalized_2025.json",
+      "raw_path": "raw_2025.json",
+      "row_count": 249,
+      "status": "COMPLETED",
+      "to_date": "2025-12-31",
+      "year": "2025"
+    }
+  },
+  "config_hash": "79d0359eb567524d896633b790c35c63c356910cc5e8cac9c4c30ccf3919d6c6",
+  "cumulative_historical_attempts": 5,
+  "cumulative_master_attempts": 0,
+  "dataset_id": "icicibank-daily-79d0359eb567",
+  "last_invocation_id": "c4eb5407-0431-4876-bdfe-ac0025bbca65",
+  "per_chunk_attempts": {
+    "2021": 1,
+    "2022": 1,
+    "2023": 1,
+    "2024": 1,
+    "2025": 1
+  }
+}

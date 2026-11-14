@@ -7,15 +7,19 @@ import pandas as pd
 import streamlit as st
 
 from nifty_lab.ui.common import footer, setup_page
+from nifty_lab.ui.macro_calendar import render_macro_calendar_section
+from nifty_lab.ui.watchlist_news import render_watchlist_news_section
 
 cfg = setup_page("Global News & Events")
 
-st.warning(
-    "**News intelligence is a Phase 2 feature.** No live feed is connected, so this page shows no headlines. "
-    "The app will never display invented news. When connected, every item will carry its source, publication time and link, "
-    "and confirmed facts will be separated from interpretation.",
-    icon="📰",
+st.caption(
+    "Company headlines use manual Upstox refresh. Macro events below use **your imported** Trading Economics "
+    "snapshot when loaded — not exchange session calendars and not trade signals."
 )
+
+render_macro_calendar_section()
+
+render_watchlist_news_section(st.session_state.get("watchlist_bundle"))
 
 st.subheader("Planned sources (official / reputable)")
 sources = pd.DataFrame(

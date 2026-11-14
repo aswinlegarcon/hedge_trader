@@ -5,7 +5,8 @@ import streamlit as st
 
 from nifty_lab.brokers import ALL_BROKERS, ConnectionState
 from nifty_lab.signals import evaluate
-from nifty_lab.ui.common import candlestick_figure, footer, indicator_frame, inr, provenance_banner, setup_page, sidebar_data_source
+from nifty_lab.data import DataKind
+from nifty_lab.ui.common import candlestick_figure, chart_interval_label, footer, indicator_frame, inr, provenance_banner, setup_page, sidebar_data_source
 
 cfg = setup_page("Market Overview")
 ds = sidebar_data_source()
@@ -13,8 +14,8 @@ provenance_banner(ds)
 
 st.info(
     "**Version 1 — read-only research build.** No order placement exists anywhere in this code base. "
-    "Live market data for the instruments below arrives in Phase 2 once a read-only broker API is configured; "
-    "until then every tile that lacks a data source says so explicitly.",
+    "Use Upstox in the sidebar for read-only NSE equity/ETF candles when your local token is configured; "
+    "tiles without a loaded source continue to show NO DATA.",
     icon="🛡️",
 )
 
@@ -27,9 +28,14 @@ for col, name in zip(cols, tiles):
         if name == "NIFTY 50" and ds is not None:
             df = ds.df
             chg = df["close"].iloc[-1] / df["close"].iloc[-2] - 1 if len(df) > 1 else 0.0
-            label = "NIFTY 50 (SYNTHETIC)" if ds.provenance.is_synthetic else f"NIFTY 50 ({ds.provenance.symbol})"
+            if ds.provenance.is_synthetic:
+                label = "NIFTY 50 (SYNTHETIC)"
+            elif ds.provenance.kind == DataKind.BROKER_LIVE:
+                label = f"{ds.provenance.symbol} ({chart_interval_label(ds)})"
+            else:
+                label = f"{ds.provenance.symbol}"
             st.metric(label, f"{df['close'].iloc[-1]:,.2f}", f"{chg:+.2%}")
-            st.caption(f"Last bar {df.index[-1].date()} · {ds.provenance.kind.value}")
+            st.caption(f"Last bar {df.index[-1]} · {ds.provenance.kind.value}")
         else:
             st.metric(name, "NO DATA")
             st.caption("Source not configured")
@@ -74,7 +80,13 @@ with c1:
         st.write(f"{icon} **{s.name}** — {s.state.value}. {s.detail}")
 with c2:
     r = cfg.risk
-    st.write(f"Capital **{inr(r.capital)}** · max drawdown **{inr(r.max_drawdown)}** ({r.max_drawdown_pct:.0%}) · per-trade risk **{inr(r.risk_per_trade_min)}–{inr(r.risk_per_trade_max)}**")
-    st.write(f"Portfolio risk cap **{inr(r.max_portfolio_risk_pct * r.capital)}** · max open positions **{r.max_open_positions}**")
+    per_pos = "unconfirmed" if r.risk_per_trade_max is None else inr(r.risk_per_trade_max)
+    st.write(
+        f"Profile **{cfg.profile_id}** · capital **{inr(r.capital)}** · total loss ceiling **{inr(r.max_drawdown)}** "
+        f"({r.max_drawdown_pct:.0%}) · per-position max **{per_pos}** (no minimum size)"
+    )
+    st.write(f"Interim portfolio risk cap **{inr(r.max_portfolio_risk_pct * r.capital)}** · max open positions **{r.max_open_positions}**")
+    if cfg.legacy_env_conflict:
+        st.warning("Legacy NSL_* overrides detected — funded-paper qualification disabled until resolved (see Settings).")
 
 footer()

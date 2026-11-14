@@ -1,0 +1,90 @@
+{
+  "correction_reason": null,
+  "engine_source_digest": "76e338fda38c916453fac169865047425d0f925e7baec0dcffb4e98c8f3964aa",
+  "evaluation_config": {
+    "baseline_convention": "first_observed_2024_open_to_last_2024_close; independent \u20b920k; fees in sizing",
+    "context_years_for_indicators_only": [
+      2021,
+      2022,
+      2023
+    ],
+    "evaluation_years": [
+      2024
+    ],
+    "expected_evaluation_rows": 249,
+    "force_split_end_at_last_evaluation_session": true,
+    "holdout_years_excluded_from_outcomes": [
+      2025
+    ],
+    "independent_account_initial_cash_inr": "20000.00",
+    "no_pending_signal_carried_from_context": true,
+    "split_id": "validation-2024",
+    "strategy_rules_hash_ref": "d5781d90f3276de37320059a14529c944580fc671c351cbbc04bed90bb191101"
+  },
+  "evaluation_config_hash": "a5e169f0f061eb9d08ce9eacca4c3d0220da0b91a2bb39c2f97abcf66f5b7f58",
+  "frozen_rules": {
+    "costs_illustrative": {
+      "fee_bps_per_side": "10",
+      "real_costs": "UNKNOWN",
+      "slippage_bps_per_side": "10"
+    },
+    "development_years": [
+      2021,
+      2022,
+      2023
+    ],
+    "ema_alpha_rule": "2/(span+1), seed=first_close, adjust=False equivalent",
+    "ema_spans": [
+      20,
+      50
+    ],
+    "entry": "next_session_open_adverse_slip",
+    "entry_skip_if_raw_open_lte_stop_or_modeled_entry_lte_stop": true,
+    "exit": {
+      "gap_stop_uses_open": true,
+      "gap_target_uses_target": true,
+      "split_end_force_close": true,
+      "stop_before_target_same_bar": true,
+      "stop_signal_low": true,
+      "target_2r": true,
+      "time_exit_sessions": 5
+    },
+    "instrument_key": "NSE_EQ|INE090A01021",
+    "position": {
+      "max_open": 1,
+      "no_entry_on_exit_session": true,
+      "no_pyramiding": true
+    },
+    "precision": {
+      "arithmetic": "decimal.Decimal",
+      "reporting": "ROUND_HALF_UP quantize 0.01 INR"
+    },
+    "risk_latch": {
+      "initial_loss_inr": "2000.00",
+      "peak_drawdown_inr": "2000.00"
+    },
+    "signal": {
+      "close_gt_ema20_gt_ema50": true,
+      "low_lte_ema20": true,
+      "volume_gte_median_prior_20_excl_signal": true
+    },
+    "sizing": {
+      "entry_allocation_ceiling_inr": "20000.00",
+      "initial_cash_inr": "20000.00",
+      "max_planned_stop_inr": "400.00",
+      "whole_shares": true
+    },
+    "strategy_id": "icicibank_daily_pullback_v1",
+    "warmup_bars": 100
+  },
+  "future_splits_locked": [
+    "2025 holdout not evaluated in this slice"
+  ],
+  "no_optimization": true,
+  "parent_run_id": "22f4e81b-e66a-4ea1-b77d-325323f61db7",
+  "purpose": "FROZEN_2024_VALIDATION",
+  "registered_at_utc": "2026-11-13T11:24:13.336426+00:00",
+  "rules_config_hash": "d5781d90f3276de37320059a14529c944580fc671c351cbbc04bed90bb191101",
+  "run_id": "d1d9016b-3fc0-4dbf-944e-f4dde5353cd2",
+  "split_id": "validation-2024"
+}

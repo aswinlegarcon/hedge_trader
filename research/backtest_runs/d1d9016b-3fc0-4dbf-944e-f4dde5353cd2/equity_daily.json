@@ -1,0 +1,1745 @@
+[
+  {
+    "ts": "2024-01-01 18:30:00+00:00",
+    "cash_inr": "20000.00",
+    "gross_equity_inr": "20000.00",
+    "net_liquidation_inr": "20000.00",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-01-02 18:30:00+00:00",
+    "cash_inr": "20000.00",
+    "gross_equity_inr": "20000.00",
+    "net_liquidation_inr": "20000.00",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-01-03 18:30:00+00:00",
+    "cash_inr": "20000.00",
+    "gross_equity_inr": "20000.00",
+    "net_liquidation_inr": "20000.00",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-01-04 18:30:00+00:00",
+    "cash_inr": "20000.00",
+    "gross_equity_inr": "20000.00",
+    "net_liquidation_inr": "20000.00",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-01-07 18:30:00+00:00",
+    "cash_inr": "20000.00",
+    "gross_equity_inr": "20000.00",
+    "net_liquidation_inr": "20000.00",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-01-08 18:30:00+00:00",
+    "cash_inr": "20000.00",
+    "gross_equity_inr": "20000.00",
+    "net_liquidation_inr": "20000.00",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-01-09 18:30:00+00:00",
+    "cash_inr": "20000.00",
+    "gross_equity_inr": "20000.00",
+    "net_liquidation_inr": "20000.00",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-01-10 18:30:00+00:00",
+    "cash_inr": "20000.00",
+    "gross_equity_inr": "20000.00",
+    "net_liquidation_inr": "20000.00",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-01-11 18:30:00+00:00",
+    "cash_inr": "20000.00",
+    "gross_equity_inr": "20000.00",
+    "net_liquidation_inr": "20000.00",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-01-14 18:30:00+00:00",
+    "cash_inr": "20000.00",
+    "gross_equity_inr": "20000.00",
+    "net_liquidation_inr": "20000.00",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-01-15 18:30:00+00:00",
+    "cash_inr": "20000.00",
+    "gross_equity_inr": "20000.00",
+    "net_liquidation_inr": "20000.00",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-01-16 18:30:00+00:00",
+    "cash_inr": "20000.00",
+    "gross_equity_inr": "20000.00",
+    "net_liquidation_inr": "20000.00",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-01-17 18:30:00+00:00",
+    "cash_inr": "20000.00",
+    "gross_equity_inr": "20000.00",
+    "net_liquidation_inr": "20000.00",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-01-18 18:30:00+00:00",
+    "cash_inr": "20000.00",
+    "gross_equity_inr": "20000.00",
+    "net_liquidation_inr": "20000.00",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-01-19 18:30:00+00:00",
+    "cash_inr": "2864.56",
+    "gross_equity_inr": "20012.46",
+    "net_liquidation_inr": "19978.16",
+    "exposure_pct": "0.856861"
+  },
+  {
+    "ts": "2024-01-22 18:30:00+00:00",
+    "cash_inr": "20607.21",
+    "gross_equity_inr": "20607.21",
+    "net_liquidation_inr": "20607.21",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-01-23 18:30:00+00:00",
+    "cash_inr": "20607.21",
+    "gross_equity_inr": "20607.21",
+    "net_liquidation_inr": "20607.21",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-01-24 18:30:00+00:00",
+    "cash_inr": "20498.05",
+    "gross_equity_inr": "20498.05",
+    "net_liquidation_inr": "20498.05",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-01-28 18:30:00+00:00",
+    "cash_inr": "20498.05",
+    "gross_equity_inr": "20498.05",
+    "net_liquidation_inr": "20498.05",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-01-29 18:30:00+00:00",
+    "cash_inr": "20498.05",
+    "gross_equity_inr": "20498.05",
+    "net_liquidation_inr": "20498.05",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-01-30 18:30:00+00:00",
+    "cash_inr": "20498.05",
+    "gross_equity_inr": "20498.05",
+    "net_liquidation_inr": "20498.05",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-01-31 18:30:00+00:00",
+    "cash_inr": "9101.89",
+    "gross_equity_inr": "20378.54",
+    "net_liquidation_inr": "20355.94",
+    "exposure_pct": "0.553359"
+  },
+  {
+    "ts": "2024-02-01 18:30:00+00:00",
+    "cash_inr": "9101.89",
+    "gross_equity_inr": "20365.89",
+    "net_liquidation_inr": "20343.42",
+    "exposure_pct": "0.553082"
+  },
+  {
+    "ts": "2024-02-04 18:30:00+00:00",
+    "cash_inr": "9101.89",
+    "gross_equity_inr": "20360.39",
+    "net_liquidation_inr": "20337.92",
+    "exposure_pct": "0.552961"
+  },
+  {
+    "ts": "2024-02-05 18:30:00+00:00",
+    "cash_inr": "9101.89",
+    "gross_equity_inr": "20392.29",
+    "net_liquidation_inr": "20369.68",
+    "exposure_pct": "0.55366"
+  },
+  {
+    "ts": "2024-02-06 18:30:00+00:00",
+    "cash_inr": "20323.09",
+    "gross_equity_inr": "20323.09",
+    "net_liquidation_inr": "20323.09",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-02-07 18:30:00+00:00",
+    "cash_inr": "20323.09",
+    "gross_equity_inr": "20323.09",
+    "net_liquidation_inr": "20323.09",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-02-08 18:30:00+00:00",
+    "cash_inr": "20323.09",
+    "gross_equity_inr": "20323.09",
+    "net_liquidation_inr": "20323.09",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-02-11 18:30:00+00:00",
+    "cash_inr": "20323.09",
+    "gross_equity_inr": "20323.09",
+    "net_liquidation_inr": "20323.09",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-02-12 18:30:00+00:00",
+    "cash_inr": "20323.09",
+    "gross_equity_inr": "20323.09",
+    "net_liquidation_inr": "20323.09",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-02-13 18:30:00+00:00",
+    "cash_inr": "20654.63",
+    "gross_equity_inr": "20654.63",
+    "net_liquidation_inr": "20654.63",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-02-14 18:30:00+00:00",
+    "cash_inr": "20654.63",
+    "gross_equity_inr": "20654.63",
+    "net_liquidation_inr": "20654.63",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-02-15 18:30:00+00:00",
+    "cash_inr": "20654.63",
+    "gross_equity_inr": "20654.63",
+    "net_liquidation_inr": "20654.63",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-02-18 18:30:00+00:00",
+    "cash_inr": "20654.63",
+    "gross_equity_inr": "20654.63",
+    "net_liquidation_inr": "20654.63",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-02-19 18:30:00+00:00",
+    "cash_inr": "20654.63",
+    "gross_equity_inr": "20654.63",
+    "net_liquidation_inr": "20654.63",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-02-20 18:30:00+00:00",
+    "cash_inr": "20654.63",
+    "gross_equity_inr": "20654.63",
+    "net_liquidation_inr": "20654.63",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-02-21 18:30:00+00:00",
+    "cash_inr": "20654.63",
+    "gross_equity_inr": "20654.63",
+    "net_liquidation_inr": "20654.63",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-02-22 18:30:00+00:00",
+    "cash_inr": "20654.63",
+    "gross_equity_inr": "20654.63",
+    "net_liquidation_inr": "20654.63",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-02-25 18:30:00+00:00",
+    "cash_inr": "20654.63",
+    "gross_equity_inr": "20654.63",
+    "net_liquidation_inr": "20654.63",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-02-26 18:30:00+00:00",
+    "cash_inr": "20654.63",
+    "gross_equity_inr": "20654.63",
+    "net_liquidation_inr": "20654.63",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-02-27 18:30:00+00:00",
+    "cash_inr": "20654.63",
+    "gross_equity_inr": "20654.63",
+    "net_liquidation_inr": "20654.63",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-02-28 18:30:00+00:00",
+    "cash_inr": "20654.63",
+    "gross_equity_inr": "20654.63",
+    "net_liquidation_inr": "20654.63",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-02-29 18:30:00+00:00",
+    "cash_inr": "20654.63",
+    "gross_equity_inr": "20654.63",
+    "net_liquidation_inr": "20654.63",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-03-01 18:30:00+00:00",
+    "cash_inr": "20654.63",
+    "gross_equity_inr": "20654.63",
+    "net_liquidation_inr": "20654.63",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-03-03 18:30:00+00:00",
+    "cash_inr": "20654.63",
+    "gross_equity_inr": "20654.63",
+    "net_liquidation_inr": "20654.63",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-03-04 18:30:00+00:00",
+    "cash_inr": "20654.63",
+    "gross_equity_inr": "20654.63",
+    "net_liquidation_inr": "20654.63",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-03-05 18:30:00+00:00",
+    "cash_inr": "20654.63",
+    "gross_equity_inr": "20654.63",
+    "net_liquidation_inr": "20654.63",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-03-06 18:30:00+00:00",
+    "cash_inr": "20654.63",
+    "gross_equity_inr": "20654.63",
+    "net_liquidation_inr": "20654.63",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-03-10 18:30:00+00:00",
+    "cash_inr": "20654.63",
+    "gross_equity_inr": "20654.63",
+    "net_liquidation_inr": "20654.63",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-03-11 18:30:00+00:00",
+    "cash_inr": "20654.63",
+    "gross_equity_inr": "20654.63",
+    "net_liquidation_inr": "20654.63",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-03-12 18:30:00+00:00",
+    "cash_inr": "4465.01",
+    "gross_equity_inr": "20724.26",
+    "net_liquidation_inr": "20691.82",
+    "exposure_pct": "0.784552"
+  },
+  {
+    "ts": "2024-03-13 18:30:00+00:00",
+    "cash_inr": "4465.01",
+    "gross_equity_inr": "20719.01",
+    "net_liquidation_inr": "20686.57",
+    "exposure_pct": "0.784497"
+  },
+  {
+    "ts": "2024-03-14 18:30:00+00:00",
+    "cash_inr": "4465.01",
+    "gross_equity_inr": "20670.26",
+    "net_liquidation_inr": "20637.87",
+    "exposure_pct": "0.783989"
+  },
+  {
+    "ts": "2024-03-17 18:30:00+00:00",
+    "cash_inr": "4465.01",
+    "gross_equity_inr": "20683.01",
+    "net_liquidation_inr": "20650.61",
+    "exposure_pct": "0.784122"
+  },
+  {
+    "ts": "2024-03-18 18:30:00+00:00",
+    "cash_inr": "20691.82",
+    "gross_equity_inr": "20691.82",
+    "net_liquidation_inr": "20691.82",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-03-19 18:30:00+00:00",
+    "cash_inr": "20691.82",
+    "gross_equity_inr": "20691.82",
+    "net_liquidation_inr": "20691.82",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-03-20 18:30:00+00:00",
+    "cash_inr": "6467.44",
+    "gross_equity_inr": "20530.84",
+    "net_liquidation_inr": "20502.75",
+    "exposure_pct": "0.684989"
+  },
+  {
+    "ts": "2024-03-21 18:30:00+00:00",
+    "cash_inr": "6467.44",
+    "gross_equity_inr": "20641.34",
+    "net_liquidation_inr": "20613.01",
+    "exposure_pct": "0.686675"
+  },
+  {
+    "ts": "2024-03-25 18:30:00+00:00",
+    "cash_inr": "6467.44",
+    "gross_equity_inr": "20555.54",
+    "net_liquidation_inr": "20527.43",
+    "exposure_pct": "0.685368"
+  },
+  {
+    "ts": "2024-03-26 18:30:00+00:00",
+    "cash_inr": "6467.44",
+    "gross_equity_inr": "20556.19",
+    "net_liquidation_inr": "20528.08",
+    "exposure_pct": "0.685377"
+  },
+  {
+    "ts": "2024-03-27 18:30:00+00:00",
+    "cash_inr": "20651.97",
+    "gross_equity_inr": "20651.97",
+    "net_liquidation_inr": "20651.97",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-03-31 18:30:00+00:00",
+    "cash_inr": "20651.97",
+    "gross_equity_inr": "20651.97",
+    "net_liquidation_inr": "20651.97",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-04-01 18:30:00+00:00",
+    "cash_inr": "20651.97",
+    "gross_equity_inr": "20651.97",
+    "net_liquidation_inr": "20651.97",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-04-02 18:30:00+00:00",
+    "cash_inr": "20651.97",
+    "gross_equity_inr": "20651.97",
+    "net_liquidation_inr": "20651.97",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-04-03 18:30:00+00:00",
+    "cash_inr": "20651.97",
+    "gross_equity_inr": "20651.97",
+    "net_liquidation_inr": "20651.97",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-04-04 18:30:00+00:00",
+    "cash_inr": "20651.97",
+    "gross_equity_inr": "20651.97",
+    "net_liquidation_inr": "20651.97",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-04-07 18:30:00+00:00",
+    "cash_inr": "20651.97",
+    "gross_equity_inr": "20651.97",
+    "net_liquidation_inr": "20651.97",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-04-08 18:30:00+00:00",
+    "cash_inr": "20651.97",
+    "gross_equity_inr": "20651.97",
+    "net_liquidation_inr": "20651.97",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-04-09 18:30:00+00:00",
+    "cash_inr": "20651.97",
+    "gross_equity_inr": "20651.97",
+    "net_liquidation_inr": "20651.97",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-04-11 18:30:00+00:00",
+    "cash_inr": "20651.97",
+    "gross_equity_inr": "20651.97",
+    "net_liquidation_inr": "20651.97",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-04-14 18:30:00+00:00",
+    "cash_inr": "20651.97",
+    "gross_equity_inr": "20651.97",
+    "net_liquidation_inr": "20651.97",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-04-15 18:30:00+00:00",
+    "cash_inr": "20651.97",
+    "gross_equity_inr": "20651.97",
+    "net_liquidation_inr": "20651.97",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-04-17 18:30:00+00:00",
+    "cash_inr": "20651.97",
+    "gross_equity_inr": "20651.97",
+    "net_liquidation_inr": "20651.97",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-04-18 18:30:00+00:00",
+    "cash_inr": "20651.97",
+    "gross_equity_inr": "20651.97",
+    "net_liquidation_inr": "20651.97",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-04-21 18:30:00+00:00",
+    "cash_inr": "20651.97",
+    "gross_equity_inr": "20651.97",
+    "net_liquidation_inr": "20651.97",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-04-22 18:30:00+00:00",
+    "cash_inr": "20651.97",
+    "gross_equity_inr": "20651.97",
+    "net_liquidation_inr": "20651.97",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-04-23 18:30:00+00:00",
+    "cash_inr": "20651.97",
+    "gross_equity_inr": "20651.97",
+    "net_liquidation_inr": "20651.97",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-04-24 18:30:00+00:00",
+    "cash_inr": "20651.97",
+    "gross_equity_inr": "20651.97",
+    "net_liquidation_inr": "20651.97",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-04-25 18:30:00+00:00",
+    "cash_inr": "20651.97",
+    "gross_equity_inr": "20651.97",
+    "net_liquidation_inr": "20651.97",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-04-28 18:30:00+00:00",
+    "cash_inr": "20651.97",
+    "gross_equity_inr": "20651.97",
+    "net_liquidation_inr": "20651.97",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-04-29 18:30:00+00:00",
+    "cash_inr": "20651.97",
+    "gross_equity_inr": "20651.97",
+    "net_liquidation_inr": "20651.97",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-05-01 18:30:00+00:00",
+    "cash_inr": "20651.97",
+    "gross_equity_inr": "20651.97",
+    "net_liquidation_inr": "20651.97",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-05-02 18:30:00+00:00",
+    "cash_inr": "20651.97",
+    "gross_equity_inr": "20651.97",
+    "net_liquidation_inr": "20651.97",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-05-05 18:30:00+00:00",
+    "cash_inr": "20651.97",
+    "gross_equity_inr": "20651.97",
+    "net_liquidation_inr": "20651.97",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-05-06 18:30:00+00:00",
+    "cash_inr": "20651.97",
+    "gross_equity_inr": "20651.97",
+    "net_liquidation_inr": "20651.97",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-05-07 18:30:00+00:00",
+    "cash_inr": "20651.97",
+    "gross_equity_inr": "20651.97",
+    "net_liquidation_inr": "20651.97",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-05-08 18:30:00+00:00",
+    "cash_inr": "20651.97",
+    "gross_equity_inr": "20651.97",
+    "net_liquidation_inr": "20651.97",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-05-09 18:30:00+00:00",
+    "cash_inr": "20651.97",
+    "gross_equity_inr": "20651.97",
+    "net_liquidation_inr": "20651.97",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-05-12 18:30:00+00:00",
+    "cash_inr": "20651.97",
+    "gross_equity_inr": "20651.97",
+    "net_liquidation_inr": "20651.97",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-05-13 18:30:00+00:00",
+    "cash_inr": "20651.97",
+    "gross_equity_inr": "20651.97",
+    "net_liquidation_inr": "20651.97",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-05-14 18:30:00+00:00",
+    "cash_inr": "20651.97",
+    "gross_equity_inr": "20651.97",
+    "net_liquidation_inr": "20651.97",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-05-15 18:30:00+00:00",
+    "cash_inr": "20651.97",
+    "gross_equity_inr": "20651.97",
+    "net_liquidation_inr": "20651.97",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-05-16 18:30:00+00:00",
+    "cash_inr": "1385.66",
+    "gross_equity_inr": "20604.16",
+    "net_liquidation_inr": "20565.75",
+    "exposure_pct": "0.932749"
+  },
+  {
+    "ts": "2024-05-17 18:30:00+00:00",
+    "cash_inr": "1385.66",
+    "gross_equity_inr": "20608.41",
+    "net_liquidation_inr": "20570.00",
+    "exposure_pct": "0.932762"
+  },
+  {
+    "ts": "2024-05-20 18:30:00+00:00",
+    "cash_inr": "1385.66",
+    "gross_equity_inr": "20441.81",
+    "net_liquidation_inr": "20403.73",
+    "exposure_pct": "0.932214"
+  },
+  {
+    "ts": "2024-05-21 18:30:00+00:00",
+    "cash_inr": "20265.49",
+    "gross_equity_inr": "20265.49",
+    "net_liquidation_inr": "20265.49",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-05-22 18:30:00+00:00",
+    "cash_inr": "20265.49",
+    "gross_equity_inr": "20265.49",
+    "net_liquidation_inr": "20265.49",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-05-23 18:30:00+00:00",
+    "cash_inr": "20265.49",
+    "gross_equity_inr": "20265.49",
+    "net_liquidation_inr": "20265.49",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-05-26 18:30:00+00:00",
+    "cash_inr": "20265.49",
+    "gross_equity_inr": "20265.49",
+    "net_liquidation_inr": "20265.49",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-05-27 18:30:00+00:00",
+    "cash_inr": "20265.49",
+    "gross_equity_inr": "20265.49",
+    "net_liquidation_inr": "20265.49",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-05-28 18:30:00+00:00",
+    "cash_inr": "20265.49",
+    "gross_equity_inr": "20265.49",
+    "net_liquidation_inr": "20265.49",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-05-29 18:30:00+00:00",
+    "cash_inr": "20265.49",
+    "gross_equity_inr": "20265.49",
+    "net_liquidation_inr": "20265.49",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-05-30 18:30:00+00:00",
+    "cash_inr": "20265.49",
+    "gross_equity_inr": "20265.49",
+    "net_liquidation_inr": "20265.49",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-06-02 18:30:00+00:00",
+    "cash_inr": "13231.44",
+    "gross_equity_inr": "20191.44",
+    "net_liquidation_inr": "20177.53",
+    "exposure_pct": "0.344701"
+  },
+  {
+    "ts": "2024-06-03 18:30:00+00:00",
+    "cash_inr": "19885.62",
+    "gross_equity_inr": "19885.62",
+    "net_liquidation_inr": "19885.62",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-06-04 18:30:00+00:00",
+    "cash_inr": "19885.62",
+    "gross_equity_inr": "19885.62",
+    "net_liquidation_inr": "19885.62",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-06-05 18:30:00+00:00",
+    "cash_inr": "19885.62",
+    "gross_equity_inr": "19885.62",
+    "net_liquidation_inr": "19885.62",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-06-06 18:30:00+00:00",
+    "cash_inr": "19885.62",
+    "gross_equity_inr": "19885.62",
+    "net_liquidation_inr": "19885.62",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-06-09 18:30:00+00:00",
+    "cash_inr": "875.59",
+    "gross_equity_inr": "19980.19",
+    "net_liquidation_inr": "19942.06",
+    "exposure_pct": "0.956177"
+  },
+  {
+    "ts": "2024-06-10 18:30:00+00:00",
+    "cash_inr": "875.59",
+    "gross_equity_inr": "19884.99",
+    "net_liquidation_inr": "19846.96",
+    "exposure_pct": "0.955967"
+  },
+  {
+    "ts": "2024-06-11 18:30:00+00:00",
+    "cash_inr": "875.59",
+    "gross_equity_inr": "19907.94",
+    "net_liquidation_inr": "19869.89",
+    "exposure_pct": "0.956018"
+  },
+  {
+    "ts": "2024-06-12 18:30:00+00:00",
+    "cash_inr": "875.59",
+    "gross_equity_inr": "19700.54",
+    "net_liquidation_inr": "19662.86",
+    "exposure_pct": "0.955555"
+  },
+  {
+    "ts": "2024-06-13 18:30:00+00:00",
+    "cash_inr": "19599.35",
+    "gross_equity_inr": "19599.35",
+    "net_liquidation_inr": "19599.35",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-06-17 18:30:00+00:00",
+    "cash_inr": "19599.35",
+    "gross_equity_inr": "19599.35",
+    "net_liquidation_inr": "19599.35",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-06-18 18:30:00+00:00",
+    "cash_inr": "6036.84",
+    "gross_equity_inr": "19770.24",
+    "net_liquidation_inr": "19742.84",
+    "exposure_pct": "0.69465"
+  },
+  {
+    "ts": "2024-06-19 18:30:00+00:00",
+    "cash_inr": "6036.84",
+    "gross_equity_inr": "19918.44",
+    "net_liquidation_inr": "19890.65",
+    "exposure_pct": "0.696922"
+  },
+  {
+    "ts": "2024-06-20 18:30:00+00:00",
+    "cash_inr": "6036.84",
+    "gross_equity_inr": "19940.64",
+    "net_liquidation_inr": "19912.83",
+    "exposure_pct": "0.697259"
+  },
+  {
+    "ts": "2024-06-23 18:30:00+00:00",
+    "cash_inr": "6036.84",
+    "gross_equity_inr": "20078.04",
+    "net_liquidation_inr": "20049.97",
+    "exposure_pct": "0.699331"
+  },
+  {
+    "ts": "2024-06-24 18:30:00+00:00",
+    "cash_inr": "20226.56",
+    "gross_equity_inr": "20226.56",
+    "net_liquidation_inr": "20226.56",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-06-25 18:30:00+00:00",
+    "cash_inr": "20226.56",
+    "gross_equity_inr": "20226.56",
+    "net_liquidation_inr": "20226.56",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-06-26 18:30:00+00:00",
+    "cash_inr": "20226.56",
+    "gross_equity_inr": "20226.56",
+    "net_liquidation_inr": "20226.56",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-06-27 18:30:00+00:00",
+    "cash_inr": "20226.56",
+    "gross_equity_inr": "20226.56",
+    "net_liquidation_inr": "20226.56",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-06-30 18:30:00+00:00",
+    "cash_inr": "20226.56",
+    "gross_equity_inr": "20226.56",
+    "net_liquidation_inr": "20226.56",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-07-01 18:30:00+00:00",
+    "cash_inr": "20226.56",
+    "gross_equity_inr": "20226.56",
+    "net_liquidation_inr": "20226.56",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-07-02 18:30:00+00:00",
+    "cash_inr": "20226.56",
+    "gross_equity_inr": "20226.56",
+    "net_liquidation_inr": "20226.56",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-07-03 18:30:00+00:00",
+    "cash_inr": "20226.56",
+    "gross_equity_inr": "20226.56",
+    "net_liquidation_inr": "20226.56",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-07-04 18:30:00+00:00",
+    "cash_inr": "20226.56",
+    "gross_equity_inr": "20226.56",
+    "net_liquidation_inr": "20226.56",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-07-07 18:30:00+00:00",
+    "cash_inr": "20226.56",
+    "gross_equity_inr": "20226.56",
+    "net_liquidation_inr": "20226.56",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-07-08 18:30:00+00:00",
+    "cash_inr": "20226.56",
+    "gross_equity_inr": "20226.56",
+    "net_liquidation_inr": "20226.56",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-07-09 18:30:00+00:00",
+    "cash_inr": "20226.56",
+    "gross_equity_inr": "20226.56",
+    "net_liquidation_inr": "20226.56",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-07-10 18:30:00+00:00",
+    "cash_inr": "20226.56",
+    "gross_equity_inr": "20226.56",
+    "net_liquidation_inr": "20226.56",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-07-11 18:30:00+00:00",
+    "cash_inr": "20226.56",
+    "gross_equity_inr": "20226.56",
+    "net_liquidation_inr": "20226.56",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-07-14 18:30:00+00:00",
+    "cash_inr": "20226.56",
+    "gross_equity_inr": "20226.56",
+    "net_liquidation_inr": "20226.56",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-07-15 18:30:00+00:00",
+    "cash_inr": "20226.56",
+    "gross_equity_inr": "20226.56",
+    "net_liquidation_inr": "20226.56",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-07-17 18:30:00+00:00",
+    "cash_inr": "20226.56",
+    "gross_equity_inr": "20226.56",
+    "net_liquidation_inr": "20226.56",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-07-18 18:30:00+00:00",
+    "cash_inr": "20226.56",
+    "gross_equity_inr": "20226.56",
+    "net_liquidation_inr": "20226.56",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-07-21 18:30:00+00:00",
+    "cash_inr": "20226.56",
+    "gross_equity_inr": "20226.56",
+    "net_liquidation_inr": "20226.56",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-07-22 18:30:00+00:00",
+    "cash_inr": "20226.56",
+    "gross_equity_inr": "20226.56",
+    "net_liquidation_inr": "20226.56",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-07-23 18:30:00+00:00",
+    "cash_inr": "19948.68",
+    "gross_equity_inr": "19948.68",
+    "net_liquidation_inr": "19948.68",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-07-24 18:30:00+00:00",
+    "cash_inr": "19948.68",
+    "gross_equity_inr": "19948.68",
+    "net_liquidation_inr": "19948.68",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-07-25 18:30:00+00:00",
+    "cash_inr": "19948.68",
+    "gross_equity_inr": "19948.68",
+    "net_liquidation_inr": "19948.68",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-07-28 18:30:00+00:00",
+    "cash_inr": "19948.68",
+    "gross_equity_inr": "19948.68",
+    "net_liquidation_inr": "19948.68",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-07-29 18:30:00+00:00",
+    "cash_inr": "19948.68",
+    "gross_equity_inr": "19948.68",
+    "net_liquidation_inr": "19948.68",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-07-30 18:30:00+00:00",
+    "cash_inr": "19948.68",
+    "gross_equity_inr": "19948.68",
+    "net_liquidation_inr": "19948.68",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-07-31 18:30:00+00:00",
+    "cash_inr": "19948.68",
+    "gross_equity_inr": "19948.68",
+    "net_liquidation_inr": "19948.68",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-08-01 18:30:00+00:00",
+    "cash_inr": "19948.68",
+    "gross_equity_inr": "19948.68",
+    "net_liquidation_inr": "19948.68",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-08-04 18:30:00+00:00",
+    "cash_inr": "19948.68",
+    "gross_equity_inr": "19948.68",
+    "net_liquidation_inr": "19948.68",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-08-05 18:30:00+00:00",
+    "cash_inr": "19948.68",
+    "gross_equity_inr": "19948.68",
+    "net_liquidation_inr": "19948.68",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-08-06 18:30:00+00:00",
+    "cash_inr": "19948.68",
+    "gross_equity_inr": "19948.68",
+    "net_liquidation_inr": "19948.68",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-08-07 18:30:00+00:00",
+    "cash_inr": "19948.68",
+    "gross_equity_inr": "19948.68",
+    "net_liquidation_inr": "19948.68",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-08-08 18:30:00+00:00",
+    "cash_inr": "19948.68",
+    "gross_equity_inr": "19948.68",
+    "net_liquidation_inr": "19948.68",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-08-11 18:30:00+00:00",
+    "cash_inr": "19948.68",
+    "gross_equity_inr": "19948.68",
+    "net_liquidation_inr": "19948.68",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-08-12 18:30:00+00:00",
+    "cash_inr": "19948.68",
+    "gross_equity_inr": "19948.68",
+    "net_liquidation_inr": "19948.68",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-08-13 18:30:00+00:00",
+    "cash_inr": "19948.68",
+    "gross_equity_inr": "19948.68",
+    "net_liquidation_inr": "19948.68",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-08-15 18:30:00+00:00",
+    "cash_inr": "19948.68",
+    "gross_equity_inr": "19948.68",
+    "net_liquidation_inr": "19948.68",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-08-18 18:30:00+00:00",
+    "cash_inr": "19948.68",
+    "gross_equity_inr": "19948.68",
+    "net_liquidation_inr": "19948.68",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-08-19 18:30:00+00:00",
+    "cash_inr": "19948.68",
+    "gross_equity_inr": "19948.68",
+    "net_liquidation_inr": "19948.68",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-08-20 18:30:00+00:00",
+    "cash_inr": "19948.68",
+    "gross_equity_inr": "19948.68",
+    "net_liquidation_inr": "19948.68",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-08-21 18:30:00+00:00",
+    "cash_inr": "19948.68",
+    "gross_equity_inr": "19948.68",
+    "net_liquidation_inr": "19948.68",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-08-22 18:30:00+00:00",
+    "cash_inr": "19948.68",
+    "gross_equity_inr": "19948.68",
+    "net_liquidation_inr": "19948.68",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-08-25 18:30:00+00:00",
+    "cash_inr": "19948.68",
+    "gross_equity_inr": "19948.68",
+    "net_liquidation_inr": "19948.68",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-08-26 18:30:00+00:00",
+    "cash_inr": "19948.68",
+    "gross_equity_inr": "19948.68",
+    "net_liquidation_inr": "19948.68",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-08-27 18:30:00+00:00",
+    "cash_inr": "19948.68",
+    "gross_equity_inr": "19948.68",
+    "net_liquidation_inr": "19948.68",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-08-28 18:30:00+00:00",
+    "cash_inr": "19948.68",
+    "gross_equity_inr": "19948.68",
+    "net_liquidation_inr": "19948.68",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-08-29 18:30:00+00:00",
+    "cash_inr": "19948.68",
+    "gross_equity_inr": "19948.68",
+    "net_liquidation_inr": "19948.68",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-09-01 18:30:00+00:00",
+    "cash_inr": "19948.68",
+    "gross_equity_inr": "19948.68",
+    "net_liquidation_inr": "19948.68",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-09-02 18:30:00+00:00",
+    "cash_inr": "19948.68",
+    "gross_equity_inr": "19948.68",
+    "net_liquidation_inr": "19948.68",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-09-03 18:30:00+00:00",
+    "cash_inr": "19948.68",
+    "gross_equity_inr": "19948.68",
+    "net_liquidation_inr": "19948.68",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-09-04 18:30:00+00:00",
+    "cash_inr": "19948.68",
+    "gross_equity_inr": "19948.68",
+    "net_liquidation_inr": "19948.68",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-09-05 18:30:00+00:00",
+    "cash_inr": "19948.68",
+    "gross_equity_inr": "19948.68",
+    "net_liquidation_inr": "19948.68",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-09-08 18:30:00+00:00",
+    "cash_inr": "19948.68",
+    "gross_equity_inr": "19948.68",
+    "net_liquidation_inr": "19948.68",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-09-09 18:30:00+00:00",
+    "cash_inr": "8793.83",
+    "gross_equity_inr": "19929.53",
+    "net_liquidation_inr": "19907.25",
+    "exposure_pct": "0.558754"
+  },
+  {
+    "ts": "2024-09-10 18:30:00+00:00",
+    "cash_inr": "8793.83",
+    "gross_equity_inr": "19920.98",
+    "net_liquidation_inr": "19898.70",
+    "exposure_pct": "0.558564"
+  },
+  {
+    "ts": "2024-09-11 18:30:00+00:00",
+    "cash_inr": "8793.83",
+    "gross_equity_inr": "20063.18",
+    "net_liquidation_inr": "20040.67",
+    "exposure_pct": "0.561693"
+  },
+  {
+    "ts": "2024-09-12 18:30:00+00:00",
+    "cash_inr": "8793.83",
+    "gross_equity_inr": "20046.98",
+    "net_liquidation_inr": "20024.49",
+    "exposure_pct": "0.561339"
+  },
+  {
+    "ts": "2024-09-15 18:30:00+00:00",
+    "cash_inr": "20136.79",
+    "gross_equity_inr": "20136.79",
+    "net_liquidation_inr": "20136.79",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-09-16 18:30:00+00:00",
+    "cash_inr": "20136.79",
+    "gross_equity_inr": "20136.79",
+    "net_liquidation_inr": "20136.79",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-09-17 18:30:00+00:00",
+    "cash_inr": "20136.79",
+    "gross_equity_inr": "20136.79",
+    "net_liquidation_inr": "20136.79",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-09-18 18:30:00+00:00",
+    "cash_inr": "20136.79",
+    "gross_equity_inr": "20136.79",
+    "net_liquidation_inr": "20136.79",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-09-19 18:30:00+00:00",
+    "cash_inr": "20136.79",
+    "gross_equity_inr": "20136.79",
+    "net_liquidation_inr": "20136.79",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-09-22 18:30:00+00:00",
+    "cash_inr": "20136.79",
+    "gross_equity_inr": "20136.79",
+    "net_liquidation_inr": "20136.79",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-09-23 18:30:00+00:00",
+    "cash_inr": "20136.79",
+    "gross_equity_inr": "20136.79",
+    "net_liquidation_inr": "20136.79",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-09-24 18:30:00+00:00",
+    "cash_inr": "20136.79",
+    "gross_equity_inr": "20136.79",
+    "net_liquidation_inr": "20136.79",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-09-25 18:30:00+00:00",
+    "cash_inr": "20136.79",
+    "gross_equity_inr": "20136.79",
+    "net_liquidation_inr": "20136.79",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-09-26 18:30:00+00:00",
+    "cash_inr": "20136.79",
+    "gross_equity_inr": "20136.79",
+    "net_liquidation_inr": "20136.79",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-09-29 18:30:00+00:00",
+    "cash_inr": "20136.79",
+    "gross_equity_inr": "20136.79",
+    "net_liquidation_inr": "20136.79",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-09-30 18:30:00+00:00",
+    "cash_inr": "20136.79",
+    "gross_equity_inr": "20136.79",
+    "net_liquidation_inr": "20136.79",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-10-02 18:30:00+00:00",
+    "cash_inr": "20136.79",
+    "gross_equity_inr": "20136.79",
+    "net_liquidation_inr": "20136.79",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-10-03 18:30:00+00:00",
+    "cash_inr": "20136.79",
+    "gross_equity_inr": "20136.79",
+    "net_liquidation_inr": "20136.79",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-10-06 18:30:00+00:00",
+    "cash_inr": "20136.79",
+    "gross_equity_inr": "20136.79",
+    "net_liquidation_inr": "20136.79",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-10-07 18:30:00+00:00",
+    "cash_inr": "20136.79",
+    "gross_equity_inr": "20136.79",
+    "net_liquidation_inr": "20136.79",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-10-08 18:30:00+00:00",
+    "cash_inr": "20136.79",
+    "gross_equity_inr": "20136.79",
+    "net_liquidation_inr": "20136.79",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-10-09 18:30:00+00:00",
+    "cash_inr": "20136.79",
+    "gross_equity_inr": "20136.79",
+    "net_liquidation_inr": "20136.79",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-10-10 18:30:00+00:00",
+    "cash_inr": "20136.79",
+    "gross_equity_inr": "20136.79",
+    "net_liquidation_inr": "20136.79",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-10-13 18:30:00+00:00",
+    "cash_inr": "20136.79",
+    "gross_equity_inr": "20136.79",
+    "net_liquidation_inr": "20136.79",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-10-14 18:30:00+00:00",
+    "cash_inr": "20136.79",
+    "gross_equity_inr": "20136.79",
+    "net_liquidation_inr": "20136.79",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-10-15 18:30:00+00:00",
+    "cash_inr": "20136.79",
+    "gross_equity_inr": "20136.79",
+    "net_liquidation_inr": "20136.79",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-10-16 18:30:00+00:00",
+    "cash_inr": "20136.79",
+    "gross_equity_inr": "20136.79",
+    "net_liquidation_inr": "20136.79",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-10-17 18:30:00+00:00",
+    "cash_inr": "20136.79",
+    "gross_equity_inr": "20136.79",
+    "net_liquidation_inr": "20136.79",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-10-20 18:30:00+00:00",
+    "cash_inr": "20136.79",
+    "gross_equity_inr": "20136.79",
+    "net_liquidation_inr": "20136.79",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-10-21 18:30:00+00:00",
+    "cash_inr": "20136.79",
+    "gross_equity_inr": "20136.79",
+    "net_liquidation_inr": "20136.79",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-10-22 18:30:00+00:00",
+    "cash_inr": "20136.79",
+    "gross_equity_inr": "20136.79",
+    "net_liquidation_inr": "20136.79",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-10-23 18:30:00+00:00",
+    "cash_inr": "20136.79",
+    "gross_equity_inr": "20136.79",
+    "net_liquidation_inr": "20136.79",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-10-24 18:30:00+00:00",
+    "cash_inr": "20136.79",
+    "gross_equity_inr": "20136.79",
+    "net_liquidation_inr": "20136.79",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-10-27 18:30:00+00:00",
+    "cash_inr": "11120.25",
+    "gross_equity_inr": "20170.20",
+    "net_liquidation_inr": "20152.13",
+    "exposure_pct": "0.448679"
+  },
+  {
+    "ts": "2024-10-28 18:30:00+00:00",
+    "cash_inr": "11120.25",
+    "gross_equity_inr": "20443.20",
+    "net_liquidation_inr": "20424.58",
+    "exposure_pct": "0.456042"
+  },
+  {
+    "ts": "2024-10-29 18:30:00+00:00",
+    "cash_inr": "11120.25",
+    "gross_equity_inr": "20305.30",
+    "net_liquidation_inr": "20286.95",
+    "exposure_pct": "0.452347"
+  },
+  {
+    "ts": "2024-10-30 18:30:00+00:00",
+    "cash_inr": "11120.25",
+    "gross_equity_inr": "20166.00",
+    "net_liquidation_inr": "20147.93",
+    "exposure_pct": "0.448564"
+  },
+  {
+    "ts": "2024-10-31 18:30:00+00:00",
+    "cash_inr": "20144.79",
+    "gross_equity_inr": "20144.79",
+    "net_liquidation_inr": "20144.79",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-11-03 18:30:00+00:00",
+    "cash_inr": "20144.79",
+    "gross_equity_inr": "20144.79",
+    "net_liquidation_inr": "20144.79",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-11-04 18:30:00+00:00",
+    "cash_inr": "20024.30",
+    "gross_equity_inr": "20024.30",
+    "net_liquidation_inr": "20024.30",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-11-05 18:30:00+00:00",
+    "cash_inr": "20024.30",
+    "gross_equity_inr": "20024.30",
+    "net_liquidation_inr": "20024.30",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-11-06 18:30:00+00:00",
+    "cash_inr": "20024.30",
+    "gross_equity_inr": "20024.30",
+    "net_liquidation_inr": "20024.30",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-11-07 18:30:00+00:00",
+    "cash_inr": "20024.30",
+    "gross_equity_inr": "20024.30",
+    "net_liquidation_inr": "20024.30",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-11-10 18:30:00+00:00",
+    "cash_inr": "20024.30",
+    "gross_equity_inr": "20024.30",
+    "net_liquidation_inr": "20024.30",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-11-11 18:30:00+00:00",
+    "cash_inr": "20024.30",
+    "gross_equity_inr": "20024.30",
+    "net_liquidation_inr": "20024.30",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-11-12 18:30:00+00:00",
+    "cash_inr": "20024.30",
+    "gross_equity_inr": "20024.30",
+    "net_liquidation_inr": "20024.30",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-11-13 18:30:00+00:00",
+    "cash_inr": "20024.30",
+    "gross_equity_inr": "20024.30",
+    "net_liquidation_inr": "20024.30",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-11-17 18:30:00+00:00",
+    "cash_inr": "20024.30",
+    "gross_equity_inr": "20024.30",
+    "net_liquidation_inr": "20024.30",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-11-18 18:30:00+00:00",
+    "cash_inr": "20024.30",
+    "gross_equity_inr": "20024.30",
+    "net_liquidation_inr": "20024.30",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-11-20 18:30:00+00:00",
+    "cash_inr": "20024.30",
+    "gross_equity_inr": "20024.30",
+    "net_liquidation_inr": "20024.30",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-11-21 18:30:00+00:00",
+    "cash_inr": "20024.30",
+    "gross_equity_inr": "20024.30",
+    "net_liquidation_inr": "20024.30",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-11-24 18:30:00+00:00",
+    "cash_inr": "20024.30",
+    "gross_equity_inr": "20024.30",
+    "net_liquidation_inr": "20024.30",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-11-25 18:30:00+00:00",
+    "cash_inr": "20024.30",
+    "gross_equity_inr": "20024.30",
+    "net_liquidation_inr": "20024.30",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-11-26 18:30:00+00:00",
+    "cash_inr": "20024.30",
+    "gross_equity_inr": "20024.30",
+    "net_liquidation_inr": "20024.30",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-11-27 18:30:00+00:00",
+    "cash_inr": "20024.30",
+    "gross_equity_inr": "20024.30",
+    "net_liquidation_inr": "20024.30",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-11-28 18:30:00+00:00",
+    "cash_inr": "20024.30",
+    "gross_equity_inr": "20024.30",
+    "net_liquidation_inr": "20024.30",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-12-01 18:30:00+00:00",
+    "cash_inr": "20024.30",
+    "gross_equity_inr": "20024.30",
+    "net_liquidation_inr": "20024.30",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-12-02 18:30:00+00:00",
+    "cash_inr": "20024.30",
+    "gross_equity_inr": "20024.30",
+    "net_liquidation_inr": "20024.30",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-12-03 18:30:00+00:00",
+    "cash_inr": "20024.30",
+    "gross_equity_inr": "20024.30",
+    "net_liquidation_inr": "20024.30",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-12-04 18:30:00+00:00",
+    "cash_inr": "20024.30",
+    "gross_equity_inr": "20024.30",
+    "net_liquidation_inr": "20024.30",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-12-05 18:30:00+00:00",
+    "cash_inr": "20024.30",
+    "gross_equity_inr": "20024.30",
+    "net_liquidation_inr": "20024.30",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-12-08 18:30:00+00:00",
+    "cash_inr": "20024.30",
+    "gross_equity_inr": "20024.30",
+    "net_liquidation_inr": "20024.30",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-12-09 18:30:00+00:00",
+    "cash_inr": "20024.30",
+    "gross_equity_inr": "20024.30",
+    "net_liquidation_inr": "20024.30",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-12-10 18:30:00+00:00",
+    "cash_inr": "20024.30",
+    "gross_equity_inr": "20024.30",
+    "net_liquidation_inr": "20024.30",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-12-11 18:30:00+00:00",
+    "cash_inr": "20024.30",
+    "gross_equity_inr": "20024.30",
+    "net_liquidation_inr": "20024.30",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-12-12 18:30:00+00:00",
+    "cash_inr": "20024.30",
+    "gross_equity_inr": "20024.30",
+    "net_liquidation_inr": "20024.30",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-12-15 18:30:00+00:00",
+    "cash_inr": "20024.30",
+    "gross_equity_inr": "20024.30",
+    "net_liquidation_inr": "20024.30",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-12-16 18:30:00+00:00",
+    "cash_inr": "20024.30",
+    "gross_equity_inr": "20024.30",
+    "net_liquidation_inr": "20024.30",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-12-17 18:30:00+00:00",
+    "cash_inr": "20024.30",
+    "gross_equity_inr": "20024.30",
+    "net_liquidation_inr": "20024.30",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-12-18 18:30:00+00:00",
+    "cash_inr": "20024.30",
+    "gross_equity_inr": "20024.30",
+    "net_liquidation_inr": "20024.30",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-12-19 18:30:00+00:00",
+    "cash_inr": "20024.30",
+    "gross_equity_inr": "20024.30",
+    "net_liquidation_inr": "20024.30",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-12-22 18:30:00+00:00",
+    "cash_inr": "20024.30",
+    "gross_equity_inr": "20024.30",
+    "net_liquidation_inr": "20024.30",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-12-23 18:30:00+00:00",
+    "cash_inr": "20024.30",
+    "gross_equity_inr": "20024.30",
+    "net_liquidation_inr": "20024.30",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-12-25 18:30:00+00:00",
+    "cash_inr": "20024.30",
+    "gross_equity_inr": "20024.30",
+    "net_liquidation_inr": "20024.30",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-12-26 18:30:00+00:00",
+    "cash_inr": "20024.30",
+    "gross_equity_inr": "20024.30",
+    "net_liquidation_inr": "20024.30",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-12-29 18:30:00+00:00",
+    "cash_inr": "20024.30",
+    "gross_equity_inr": "20024.30",
+    "net_liquidation_inr": "20024.30",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-12-30 18:30:00+00:00",
+    "cash_inr": "20024.30",
+    "gross_equity_inr": "20024.30",
+    "net_liquidation_inr": "20024.30",
+    "exposure_pct": "0.0"
+  },
+  {
+    "ts": "2024-12-31 18:30:00+00:00",
+    "cash_inr": "20024.30",
+    "gross_equity_inr": "20024.30",
+    "net_liquidation_inr": "20024.30",
+    "exposure_pct": "0.0"
+  }
+]

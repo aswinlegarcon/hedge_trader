@@ -5,9 +5,19 @@ import pandas as pd
 import streamlit as st
 
 from nifty_lab.indicators import explain, support_resistance_levels
-from nifty_lab.ui.common import candlestick_figure, footer, indicator_frame, line_panel, provenance_banner, setup_page, sidebar_data_source
+from nifty_lab.ui.common import (
+    candlestick_figure,
+    chart_interval_label,
+    footer,
+    indicator_frame,
+    is_intraday_broker,
+    line_panel,
+    provenance_banner,
+    setup_page,
+    sidebar_data_source,
+)
 
-cfg = setup_page("NIFTY Technical Analysis")
+cfg = setup_page("Technical Analysis")
 ds = sidebar_data_source()
 provenance_banner(ds)
 if ds is None:
@@ -33,11 +43,28 @@ m[0].metric("Close", f"{last['close']:,.2f}")
 m[1].metric("RSI 14", f"{last['rsi14']:.1f}" if pd.notna(last["rsi14"]) else "n/a")
 m[2].metric("ATR 14", f"{last['atr14']:,.0f} ({last['atr_pct']:.2%})" if pd.notna(last["atr14"]) else "n/a")
 m[3].metric("MACD hist", f"{last['hist']:,.1f}" if pd.notna(last["hist"]) else "n/a")
-m[4].metric("Realised vol 20d", f"{last['rv20']:.1%}" if pd.notna(last["rv20"]) else "n/a")
-m[5].metric("Vol regime", str(last["vol_regime"]))
-st.caption(f"Data timestamp: {ind.index[-1].date()} · values are computed from the selected data source only.")
+if is_intraday_broker(ds):
+    m[4].metric("Realised vol 20d", "n/a (5m data)")
+    m[5].metric("Vol regime", "n/a (5m data)")
+else:
+    m[4].metric("Realised vol 20d", f"{last['rv20']:.1%}" if pd.notna(last["rv20"]) else "n/a")
+    m[5].metric("Vol regime", str(last["vol_regime"]))
+st.caption(
+    f"Symbol **{ds.provenance.symbol}** · {chart_interval_label(ds)} bars · "
+    f"last bar {ind.index[-1]} · SMA labels refer to bars on this timeframe, not calendar days unless daily."
+)
 
-st.plotly_chart(candlestick_figure(tail, overlays=overlays, title=f"{ds.provenance.symbol} daily", bands=bands, levels=levels), width='stretch')
+st.plotly_chart(
+    candlestick_figure(
+        tail,
+        overlays=overlays,
+        title=f"{ds.provenance.symbol} · {chart_interval_label(ds)}",
+        bands=bands,
+        levels=levels,
+        use_datetime_index=not is_intraday_broker(ds),
+    ),
+    width="stretch",
+)
 
 t1, t2, t3, t4 = st.tabs(["Momentum", "Volatility", "Volume & levels", "Indicator table"])
 with t1:
@@ -50,7 +77,10 @@ with t1:
 with t2:
     st.plotly_chart(line_panel({"ATR 14": tail["atr14"]}, "ATR 14 (points)"), width='stretch')
     st.plotly_chart(line_panel({"BB width": tail["bb_width"]}, "Bollinger band width (relative)"), width='stretch')
-    st.plotly_chart(line_panel({"Realised vol 20d": tail["rv20"]}, "Annualised realised volatility"), width='stretch')
+    if not is_intraday_broker(ds):
+        st.plotly_chart(line_panel({"Realised vol 20d": tail["rv20"]}, "Annualised realised volatility"), width="stretch")
+    else:
+        st.info("Realised volatility annualisation is unavailable on 5-minute broker data in this slice.")
     with st.expander("What do these mean?"):
         for k in ("atr14", "bollinger", "vol_regime", "rv20"):
             st.write(f"**{k}** — {explain(k)}")

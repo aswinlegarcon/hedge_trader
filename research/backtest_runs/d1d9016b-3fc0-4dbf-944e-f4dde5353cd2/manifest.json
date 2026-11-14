@@ -1,0 +1,266 @@
+{
+  "status": "EXPLORATORY_COMPLETE",
+  "run_id": "d1d9016b-3fc0-4dbf-944e-f4dde5353cd2",
+  "split_id": "validation-2024",
+  "purpose": "FROZEN_2024_VALIDATION",
+  "fetched_at_utc": "2026-11-13T11:24:13.796526+00:00",
+  "readiness": "EXPLORATORY",
+  "evidence_level": "INSUFFICIENT_FOR_PREDICTION",
+  "not_live_ready": true,
+  "rules_config_hash": "d5781d90f3276de37320059a14529c944580fc671c351cbbc04bed90bb191101",
+  "evaluation_config_hash": "a5e169f0f061eb9d08ce9eacca4c3d0220da0b91a2bb39c2f97abcf66f5b7f58",
+  "frozen_rules": {
+    "strategy_id": "icicibank_daily_pullback_v1",
+    "instrument_key": "NSE_EQ|INE090A01021",
+    "development_years": [
+      2021,
+      2022,
+      2023
+    ],
+    "warmup_bars": 100,
+    "ema_spans": [
+      20,
+      50
+    ],
+    "ema_alpha_rule": "2/(span+1), seed=first_close, adjust=False equivalent",
+    "signal": {
+      "close_gt_ema20_gt_ema50": true,
+      "low_lte_ema20": true,
+      "volume_gte_median_prior_20_excl_signal": true
+    },
+    "entry": "next_session_open_adverse_slip",
+    "entry_skip_if_raw_open_lte_stop_or_modeled_entry_lte_stop": true,
+    "exit": {
+      "stop_signal_low": true,
+      "target_2r": true,
+      "stop_before_target_same_bar": true,
+      "gap_stop_uses_open": true,
+      "gap_target_uses_target": true,
+      "time_exit_sessions": 5,
+      "split_end_force_close": true
+    },
+    "position": {
+      "max_open": 1,
+      "no_pyramiding": true,
+      "no_entry_on_exit_session": true
+    },
+    "costs_illustrative": {
+      "slippage_bps_per_side": "10",
+      "fee_bps_per_side": "10",
+      "real_costs": "UNKNOWN"
+    },
+    "sizing": {
+      "initial_cash_inr": "20000.00",
+      "entry_allocation_ceiling_inr": "20000.00",
+      "whole_shares": true,
+      "max_planned_stop_inr": "400.00"
+    },
+    "precision": {
+      "reporting": "ROUND_HALF_UP quantize 0.01 INR",
+      "arithmetic": "decimal.Decimal"
+    },
+    "risk_latch": {
+      "initial_loss_inr": "2000.00",
+      "peak_drawdown_inr": "2000.00"
+    }
+  },
+  "engine_source_digest": "76e338fda38c916453fac169865047425d0f925e7baec0dcffb4e98c8f3964aa",
+  "lineage": {
+    "run_id": "d1d9016b-3fc0-4dbf-944e-f4dde5353cd2",
+    "registered_at_utc": "2026-11-13T11:24:13.336426+00:00",
+    "purpose": "FROZEN_2024_VALIDATION",
+    "split_id": "validation-2024",
+    "rules_config_hash": "d5781d90f3276de37320059a14529c944580fc671c351cbbc04bed90bb191101",
+    "evaluation_config_hash": "a5e169f0f061eb9d08ce9eacca4c3d0220da0b91a2bb39c2f97abcf66f5b7f58",
+    "evaluation_config": {
+      "split_id": "validation-2024",
+      "evaluation_years": [
+        2024
+      ],
+      "context_years_for_indicators_only": [
+        2021,
+        2022,
+        2023
+      ],
+      "expected_evaluation_rows": 249,
+      "independent_account_initial_cash_inr": "20000.00",
+      "no_pending_signal_carried_from_context": true,
+      "force_split_end_at_last_evaluation_session": true,
+      "holdout_years_excluded_from_outcomes": [
+        2025
+      ],
+      "baseline_convention": "first_observed_2024_open_to_last_2024_close; independent \u20b920k; fees in sizing",
+      "strategy_rules_hash_ref": "d5781d90f3276de37320059a14529c944580fc671c351cbbc04bed90bb191101"
+    },
+    "parent_run_id": "22f4e81b-e66a-4ea1-b77d-325323f61db7",
+    "correction_reason": null,
+    "engine_source_digest": "76e338fda38c916453fac169865047425d0f925e7baec0dcffb4e98c8f3964aa",
+    "frozen_rules": {
+      "strategy_id": "icicibank_daily_pullback_v1",
+      "instrument_key": "NSE_EQ|INE090A01021",
+      "development_years": [
+        2021,
+        2022,
+        2023
+      ],
+      "warmup_bars": 100,
+      "ema_spans": [
+        20,
+        50
+      ],
+      "ema_alpha_rule": "2/(span+1), seed=first_close, adjust=False equivalent",
+      "signal": {
+        "close_gt_ema20_gt_ema50": true,
+        "low_lte_ema20": true,
+        "volume_gte_median_prior_20_excl_signal": true
+      },
+      "entry": "next_session_open_adverse_slip",
+      "entry_skip_if_raw_open_lte_stop_or_modeled_entry_lte_stop": true,
+      "exit": {
+        "stop_signal_low": true,
+        "target_2r": true,
+        "stop_before_target_same_bar": true,
+        "gap_stop_uses_open": true,
+        "gap_target_uses_target": true,
+        "time_exit_sessions": 5,
+        "split_end_force_close": true
+      },
+      "position": {
+        "max_open": 1,
+        "no_pyramiding": true,
+        "no_entry_on_exit_session": true
+      },
+      "costs_illustrative": {
+        "slippage_bps_per_side": "10",
+        "fee_bps_per_side": "10",
+        "real_costs": "UNKNOWN"
+      },
+      "sizing": {
+        "initial_cash_inr": "20000.00",
+        "entry_allocation_ceiling_inr": "20000.00",
+        "whole_shares": true,
+        "max_planned_stop_inr": "400.00"
+      },
+      "precision": {
+        "reporting": "ROUND_HALF_UP quantize 0.01 INR",
+        "arithmetic": "decimal.Decimal"
+      },
+      "risk_latch": {
+        "initial_loss_inr": "2000.00",
+        "peak_drawdown_inr": "2000.00"
+      }
+    },
+    "no_optimization": true,
+    "future_splits_locked": [
+      "2025 holdout not evaluated in this slice"
+    ]
+  },
+  "preflight": {
+    "ok": true,
+    "error_class": null,
+    "merged_hash": "9c1a7e2b6f0d8137597d359ad34a4b58fa4033321040f263b8ea61d769a60b3e",
+    "development_hash": "95f5e7f604a2ca293284b72bead449e7a9e7f66e82b9712ab26b5c9b4523c60a",
+    "development_rows": 742,
+    "development_from": "2021-01-03",
+    "development_to": "2023-12-31",
+    "instrument_key": "NSE_EQ|INE090A01021",
+    "symbol": "ICICIBANK",
+    "dataset_id": "icicibank-daily-79d0359eb567",
+    "notes": [
+      "Calendar coverage UNVERIFIED; adjustment status UNKNOWN.",
+      "Candidate weekday gaps from acquisition remain undisclosed here.",
+      "Modeled costs are illustrative, not verified broker charges."
+    ],
+    "validation_context_hash": "95f5e7f604a2ca293284b72bead449e7a9e7f66e82b9712ab26b5c9b4523c60a",
+    "validation_evaluation_hash": "cabdeb41725090310c7e740742e1bdb3d64d7365be374992a659c808912b343e",
+    "holdout_hashes": {
+      "2025": "c61ae38f20aacb004324731ca9f9ccc2b0a10eb8958dc8b7fd4e8836eeace00b"
+    }
+  },
+  "context_bars_hash": "95f5e7f604a2ca293284b72bead449e7a9e7f66e82b9712ab26b5c9b4523c60a",
+  "evaluation_bars_hash": "cabdeb41725090310c7e740742e1bdb3d64d7365be374992a659c808912b343e",
+  "holdout_year_integrity": {
+    "2025": "c61ae38f20aacb004324731ca9f9ccc2b0a10eb8958dc8b7fd4e8836eeace00b"
+  },
+  "holdout_years_not_used_for_outcomes": [
+    2025
+  ],
+  "summary": {
+    "closed_trades": 14,
+    "wins": 6,
+    "losses": 8,
+    "breakevens": 0,
+    "win_rate": 0.42857142857142855,
+    "win_rate_wilson_95_lo": 0.21380509930400526,
+    "win_rate_wilson_95_hi": 0.6740973309713064,
+    "avg_net_win": "299.88",
+    "avg_net_loss": "-221.87",
+    "net_expectancy_per_trade": "1.74",
+    "profit_factor": 1.01,
+    "net_pnl_inr": "24.30",
+    "modeled_entry_fees_inr": "214.77",
+    "modeled_exit_fees_inr": "215.21",
+    "modeled_entry_slippage_inr": "214.65",
+    "modeled_exit_slippage_inr": "215.18",
+    "fees_note": "Fees reported separately; slippage already in fill prices.",
+    "modeled_fees_note": "Illustrative 10bps/side; not verified real tariffs.",
+    "cash_reconcile_delta_inr": "0.00",
+    "turnover_notional_inr": "430003.98",
+    "exposure_note": "Daily exposure_pct uses mark close; denominator gross_equity.",
+    "signal_opportunities": 19,
+    "admission_skips": 0,
+    "signals_skipped_while_holding": 1,
+    "skipped_exit_session": 4,
+    "skipped_halted": 0,
+    "initial_cash_inr": "20000.00",
+    "final_cash_inr": "20024.30",
+    "final_net_liquidation_inr": "20024.30",
+    "drawdown": {
+      "max_drawdown_inr": "1092.47",
+      "max_drawdown_pct": 0.05279719232044354,
+      "denominator": "net_liquidation_peak"
+    },
+    "yearly_evaluation": {
+      "2024": {
+        "trades": 14,
+        "wins": 6,
+        "losses": 8
+      }
+    },
+    "halted_new_entries": false,
+    "ambiguous_same_bar_exits": 2,
+    "boundary_forced_exits": 0,
+    "evaluation_sessions": 249,
+    "independent_account_note": "Validation portfolio starts \u20b920k; context years do not contribute trades."
+  },
+  "baselines": {
+    "cash": "20000.00",
+    "buy_and_hold": {
+      "status": "OK",
+      "shares": 20,
+      "entry_session": "2024-01-01 18:30:00+00:00",
+      "exit_session": "2024-12-31 18:30:00+00:00",
+      "entry_raw_open": "997.0",
+      "entry_fill": "998.00",
+      "remaining_cash_after_buy": "20.04",
+      "final_equity_inr": "25641.79",
+      "net_pnl_inr": "5641.79",
+      "convention": "First observed evaluation open to last evaluation close; fees in sizing."
+    }
+  },
+  "simulation_meta": {
+    "opportunity_count": 19,
+    "skipped_while_holding": 1,
+    "skipped_exit_session": 4,
+    "halted_new_entries": false,
+    "ambiguous_same_bar": 2,
+    "boundary_forced_exits": 0
+  },
+  "limitations": [
+    "Calendar UNVERIFIED; adjustment UNKNOWN.",
+    "Costs illustrative only; not verified broker charges.",
+    "Independent \u20b920k validation account; not continuous 2021\u20132024 return.",
+    "2025 holdout not evaluated for outcomes in this slice.",
+    "No optimization; single frozen strategy variant."
+  ]
+}

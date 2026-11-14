@@ -1,0 +1,51 @@
+{
+  "book": "validation_2024",
+  "status": "OK",
+  "closed_trades": 14,
+  "executed_turnover_inr": "430003.98",
+  "archived_net_pnl_inr": "24.30",
+  "net_return_on_initial_capital": "0.12%",
+  "break_even_extra_bps": 0.5651110485070394,
+  "scenarios": [
+    {
+      "scenario_id": "BASE",
+      "label": "Archived modeled net (unchanged)",
+      "extra_cost_inr": "0.00",
+      "diagnostic_net_pnl_inr": "24.30",
+      "note": "FIXED_FILL_DIAGNOSTIC"
+    },
+    {
+      "scenario_id": "EXTRA_1BP",
+      "label": "Extra 1 bps on executed turnover",
+      "extra_bps": 1,
+      "extra_cost_inr": "43.00",
+      "diagnostic_net_pnl_inr": "-18.70",
+      "note": "FIXED_FILL_DIAGNOSTIC; does not re-simulate sizing/admission/exits"
+    },
+    {
+      "scenario_id": "EXTRA_5BP",
+      "label": "Extra 5 bps on executed turnover",
+      "extra_bps": 5,
+      "extra_cost_inr": "215.00",
+      "diagnostic_net_pnl_inr": "-190.70",
+      "note": "FIXED_FILL_DIAGNOSTIC; does not re-simulate sizing/admission/exits"
+    },
+    {
+      "scenario_id": "EXTRA_10BP",
+      "label": "Extra 10 bps on executed turnover",
+      "extra_bps": 10,
+      "extra_cost_inr": "430.00",
+      "diagnostic_net_pnl_inr": "-405.70",
+      "note": "FIXED_FILL_DIAGNOSTIC; does not re-simulate sizing/admission/exits"
+    },
+    {
+      "scenario_id": "EXTRA_INR1_PER_EXECUTION",
+      "label": "\u20b91 hypothetical per modeled entry and exit (2\u00d7closed trades)",
+      "extra_cost_inr": "28.00",
+      "diagnostic_net_pnl_inr": "-3.70",
+      "executions_counted": 28,
+      "note": "Separate from bps stresses; not a broker fill count claim"
+    }
+  ],
+  "disclaimer": "FIXED_FILL_DIAGNOSTIC: trades, qty, fills and portfolio path held fixed. Archived fees/slippage already inside net P&L \u2014 stresses are additive only."
+}

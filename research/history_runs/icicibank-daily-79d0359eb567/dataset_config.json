@@ -1,0 +1,35 @@
+{
+  "api_version": "Upstox V3 historical-candle",
+  "chunks": [
+    {
+      "from": "2021-01-01",
+      "to": "2021-12-31",
+      "year": "2021"
+    },
+    {
+      "from": "2022-01-01",
+      "to": "2022-12-31",
+      "year": "2022"
+    },
+    {
+      "from": "2023-01-01",
+      "to": "2023-12-31",
+      "year": "2023"
+    },
+    {
+      "from": "2024-01-01",
+      "to": "2024-12-31",
+      "year": "2024"
+    },
+    {
+      "from": "2025-01-01",
+      "to": "2025-12-31",
+      "year": "2025"
+    }
+  ],
+  "config_hash": "79d0359eb567524d896633b790c35c63c356910cc5e8cac9c4c30ccf3919d6c6",
+  "interval": "days/1",
+  "manifest_schema_version": "spec09_full_daily_history_v1",
+  "symbol": "ICICIBANK",
+  "timezone": "Asia/Kolkata"
+}

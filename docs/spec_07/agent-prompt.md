@@ -1,0 +1,9 @@
+# In-house agent prompt
+
+Implement `/Users/sanjain/Documents/hedge_trader/docs/spec_07/` only. Read all package documents first. User supplied a Trading Economics HAR and asked to reuse its calendar request. The actual request is GET https://tradingeconomics.com/calendar?partial=calendar, which returned captured HTTP 200 HTML with 432 event rows. A fresh ordinary credential-free GET returned HTTP 202 with an empty body. Do not claim live refresh works.
+
+Deliver a usable imported macro calendar on page 02 and shared descriptive context on watchlist cards, plus one bounded public-refresh attempt. Author's sanitized import input is /Users/sanjain/Documents/Codex/2026-11-13/referenced-chatgpt-conversation-this-is-an/outputs/tradingeconomics_calendar_snapshot.json. Do not copy the original HAR/raw browser headers into the repository. You may inspect only matching calendar HTML locally if needed; never export or replay Socket.IO keys, cookies or session identifiers. No browser impersonation/challenge bypass/proxies.
+
+Keep unknown captured timezone and CSS importance mapping explicit; no guessed UTC/IST, countdown or high-impact mapping. Verify cell/header mappings, especially provider forecast versus consensus. Render safe text/links and preserve capture dates, unknown values and finite coverage. A failed public refresh must not make imported data appear live.
+
+Preserve existing changes, company news, manual events, ₹20k/₹2k policy and blocked funded-paper recording. No orders, paid API/login changes, prediction scores, commits or merges. Tests use tiny synthetic fixtures and mocked HTTP, no real HAR/.env/private database. An optional public live check is one ordinary GET only, no credential headers or access workarounds. Write docs/spec_07/handoff.md with actual import/test/live evidence and remaining limits; stop for review.

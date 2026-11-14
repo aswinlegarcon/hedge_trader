@@ -23,7 +23,8 @@ from nifty_lab.options import (
     theoretical_quote_book,
     years_to_expiry,
 )
-from nifty_lab.risk import check_position_eligibility, max_lots_for_budget
+from nifty_lab.risk import EligibilityStatus, check_position_eligibility, max_lots_for_budget
+from nifty_lab.risk.recording import context_for_production_save, try_record_funded_paper
 from nifty_lab.ui.common import footer, get_journal, inr, provenance_banner, setup_page, sidebar_data_source
 
 cfg = setup_page("Options Strategy Analyzer")
@@ -123,16 +124,24 @@ if err or position is None:
     st.error(f"INSUFFICIENT DATA — {err or 'no position'}")
     st.stop()
 
-elig = check_position_eligibility(position, cfg.risk, open_risk_inr=journal.open_risk_inr())
+funded_ctx = context_for_production_save(cfg, journal)
+elig = check_position_eligibility(position, cfg.risk, context=funded_ctx)
 mp, ml = position.max_profit(), position.max_loss()
 rr = position.reward_to_risk()
 bes = position.breakevens()
 costs = position.estimated_total_costs()
 
-if elig.eligible:
-    st.success(f"ELIGIBLE under risk budget — max loss incl. costs {inr(ml)} is within {inr(cfg.risk.risk_per_trade_min)}–{inr(cfg.risk.risk_per_trade_max)}.")
+st.markdown("##### Funded-paper qualification (requires reconciled portfolio marks)")
+if elig.status == EligibilityStatus.ELIGIBLE:
+    st.success(f"ELIGIBLE for funded-paper recording — max loss incl. costs {inr(ml)}.")
+elif elig.status == EligibilityStatus.REJECTED:
+    st.error("REJECTED:\n\n- " + "\n- ".join(elig.reasons))
 else:
-    st.error("REJECTED by risk budget:\n\n- " + "\n- ".join(elig.reasons))
+    st.warning("INSUFFICIENT DATA for funded-paper qualification:\n\n- " + "\n- ".join(elig.reasons))
+st.caption(
+    "Educational payoff below remains available. Cost schedule is a legacy **options** estimate (Zerodha-era sources) — "
+    "not verified Upstox equity/ETF costs. Qualification stays fail-closed until valuation and funding context exist."
+)
 for w in elig.warnings:
     st.warning(w)
 
@@ -176,15 +185,23 @@ fig.update_layout(title=f"{position.name} — expiry payoff ({position.underlyin
 st.plotly_chart(fig, width='stretch')
 
 per_lot_loss = position.max_loss() / lots
-st.caption(f"Position sizing: max loss per lot {inr(per_lot_loss)} → up to **{max_lots_for_budget(per_lot_loss, cfg.risk)} lot(s)** fit the ₹{cfg.risk.risk_per_trade_max:,.0f} budget.")
+if cfg.risk.risk_per_trade_max is None:
+    st.caption(f"Position sizing: max loss per lot {inr(per_lot_loss)} — per-position ceiling **unconfirmed**; lot budget not computed.")
+else:
+    st.caption(
+        f"Position sizing: max loss per lot {inr(per_lot_loss)} → up to **{max_lots_for_budget(per_lot_loss, cfg.risk)} lot(s)** "
+        f"fit a confirmed ₹{cfg.risk.risk_per_trade_max:,.0f} ceiling (when policy is set)."
+    )
 for n in position.notes:
     st.write("• " + n)
 
-with st.expander("Save to paper-trading journal"):
+with st.expander("Funded-paper journal (qualified positions only)"):
     thesis = st.text_area("Entry thesis (why this trade, in your own words)")
     target_pct = st.slider("Profit target (% of max profit)", 25, 100, 50)
     planned_exit = st.text_input("Planned exit rule", "Close at target or if index closes beyond short strike; exit 5 days before expiry.")
-    if st.button("Record paper position", disabled=not elig.eligible):
+    save_ctx = context_for_production_save(cfg, journal)
+    can_save = check_position_eligibility(position, cfg.risk, context=save_ctx).status == EligibilityStatus.ELIGIBLE
+    if st.button("Record funded-paper position", disabled=not can_save):
         entry = JournalEntry(
             trade_date=date.today().isoformat(),
             instrument=f"{symbol} {position.expiry}",
@@ -201,9 +218,13 @@ with st.expander("Save to paper-trading journal"):
             planned_exit=planned_exit,
             data_source=("THEORETICAL quotes" if qsrc.startswith("Theoretical") else "manual quotes") + (f" / {ds.provenance.kind.value}" if ds else ""),
         )
-        new_id = journal.add_entry(entry)
-        st.success(f"Saved paper position #{new_id}. This is a simulation — no order was placed.")
-    if not elig.eligible:
-        st.caption("Saving is disabled because the position fails the risk budget.")
+        new_id, final = try_record_funded_paper(journal, entry, position, cfg.risk, save_ctx)
+        if new_id is None:
+            st.error("Not saved — save-time gate:\n\n- " + "\n- ".join(final.reasons))
+        else:
+            st.success(f"Saved funded-paper position #{new_id}. Simulation only — no order was placed.")
+    if not can_save:
+        st.caption("Qualified recording disabled until funded-paper eligibility is ELIGIBLE (reconciled marks, confirmed policy, no legacy block).")
+    st.caption("Manual educational entries without qualification: use Paper Trading Journal → New entry (unqualified/manual).")
 
 footer()

@@ -29,6 +29,9 @@ class DataProvenance:
     retrieved_at: datetime
     last_bar_time: datetime | None
     notes: str = ""
+    instrument_key: str = ""
+    bar_interval: str = ""
+    exchange_tz: str = ""
 
     @property
     def is_synthetic(self) -> bool:
@@ -42,10 +45,12 @@ class DataProvenance:
         last = self.last_bar_time
         if last.tzinfo is None:
             last = last.replace(tzinfo=timezone.utc)
-        age = now - last
+        age = now - last.astimezone(timezone.utc)
+        if age.total_seconds() < 3600:
+            return f"Last bar {int(age.total_seconds() // 60)} min ago"
         days = age.days
         if days <= 0:
-            return "Fresh (same day)"
+            return "Last bar today"
         if days == 1:
             return "1 day old"
         return f"{days} days old"

@@ -1,0 +1,49 @@
+{
+  "strategy_id": "icicibank_daily_pullback_v1",
+  "instrument_key": "NSE_EQ|INE090A01021",
+  "development_years": [
+    2021,
+    2022,
+    2023
+  ],
+  "warmup_bars": 100,
+  "ema_spans": [
+    20,
+    50
+  ],
+  "ema_alpha_rule": "2/(span+1), seed=first_close, adjust=False equivalent",
+  "signal": {
+    "close_gt_ema20_gt_ema50": true,
+    "low_lte_ema20": true,
+    "volume_gte_median_prior_20_excl_signal": true
+  },
+  "entry": "next_session_open_adverse_slip",
+  "exit": {
+    "stop_signal_low": true,
+    "target_2r": true,
+    "stop_before_target_same_bar": true,
+    "gap_stop_uses_open": true,
+    "gap_target_uses_target": true,
+    "time_exit_sessions": 5,
+    "split_end_force_close": true
+  },
+  "position": {
+    "max_open": 1,
+    "no_pyramiding": true,
+    "no_entry_on_exit_session": true
+  },
+  "costs_illustrative": {
+    "slippage_bps_per_side": "10",
+    "fee_bps_per_side": "10",
+    "real_costs": "UNKNOWN"
+  },
+  "sizing": {
+    "initial_cash_inr": "20000.00",
+    "whole_shares": true,
+    "max_planned_stop_inr": "400.00"
+  },
+  "risk_latch": {
+    "initial_loss_inr": "2000.00",
+    "peak_drawdown_inr": "2000.00"
+  }
+}

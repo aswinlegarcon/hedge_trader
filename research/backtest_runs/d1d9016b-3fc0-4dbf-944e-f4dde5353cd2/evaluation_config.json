@@ -1,0 +1,20 @@
+{
+  "split_id": "validation-2024",
+  "evaluation_years": [
+    2024
+  ],
+  "context_years_for_indicators_only": [
+    2021,
+    2022,
+    2023
+  ],
+  "expected_evaluation_rows": 249,
+  "independent_account_initial_cash_inr": "20000.00",
+  "no_pending_signal_carried_from_context": true,
+  "force_split_end_at_last_evaluation_session": true,
+  "holdout_years_excluded_from_outcomes": [
+    2025
+  ],
+  "baseline_convention": "first_observed_2024_open_to_last_2024_close; independent \u20b920k; fees in sizing",
+  "strategy_rules_hash_ref": "d5781d90f3276de37320059a14529c944580fc671c351cbbc04bed90bb191101"
+}

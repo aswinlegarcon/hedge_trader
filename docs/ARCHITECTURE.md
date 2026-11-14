@@ -12,7 +12,7 @@ nifty_lab/
   options/                  Black-Scholes + Greeks + IV; cost schedule; payoff engine; strategy builders
   risk/                     Eligibility vs budget; portfolio exposure/drawdown/concentration
   journal/                  SQLite paper journal, notes, signal log, performance summary
-  brokers/                  Read-only broker interface + Kite/Kotak status stubs (Phase 2)
+  brokers/                  Read-only broker interface + Upstox offline status (Spec 03; data later)
   ui/common.py              Shared Streamlit helpers, charts, banners
 tests/                      pytest suite for all mathematical and risk logic
 scripts/                    make_sample_data.py regenerates the synthetic CSV

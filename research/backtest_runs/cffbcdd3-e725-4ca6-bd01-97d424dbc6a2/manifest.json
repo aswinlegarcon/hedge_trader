@@ -1,0 +1,143 @@
+{
+  "status": "EXPLORATORY_COMPLETE",
+  "run_id": "cffbcdd3-e725-4ca6-bd01-97d424dbc6a2",
+  "fetched_at_utc": "2026-11-13T10:05:43.026530+00:00",
+  "readiness": "EXPLORATORY",
+  "evidence_level": "INSUFFICIENT_FOR_PREDICTION",
+  "not_live_ready": true,
+  "rules_config_hash": "de784daaeabb7642c9ce213a832704a46b8ea60e2461fdc95f715cf7ae9df8fb",
+  "frozen_rules": {
+    "strategy_id": "icicibank_daily_pullback_v1",
+    "instrument_key": "NSE_EQ|INE090A01021",
+    "development_years": [
+      2021,
+      2022,
+      2023
+    ],
+    "warmup_bars": 100,
+    "ema_spans": [
+      20,
+      50
+    ],
+    "ema_alpha_rule": "2/(span+1), seed=first_close, adjust=False equivalent",
+    "signal": {
+      "close_gt_ema20_gt_ema50": true,
+      "low_lte_ema20": true,
+      "volume_gte_median_prior_20_excl_signal": true
+    },
+    "entry": "next_session_open_adverse_slip",
+    "exit": {
+      "stop_signal_low": true,
+      "target_2r": true,
+      "stop_before_target_same_bar": true,
+      "gap_stop_uses_open": true,
+      "gap_target_uses_target": true,
+      "time_exit_sessions": 5,
+      "split_end_force_close": true
+    },
+    "position": {
+      "max_open": 1,
+      "no_pyramiding": true,
+      "no_entry_on_exit_session": true
+    },
+    "costs_illustrative": {
+      "slippage_bps_per_side": "10",
+      "fee_bps_per_side": "10",
+      "real_costs": "UNKNOWN"
+    },
+    "sizing": {
+      "initial_cash_inr": "20000.00",
+      "whole_shares": true,
+      "max_planned_stop_inr": "400.00"
+    },
+    "risk_latch": {
+      "initial_loss_inr": "2000.00",
+      "peak_drawdown_inr": "2000.00"
+    }
+  },
+  "engine_source_digest": "509ea60062e8d49f74e014c3d2146c2889598544dcf47ca908fadbd57e6ff04b",
+  "preflight": {
+    "ok": true,
+    "error_class": null,
+    "merged_hash": "9c1a7e2b6f0d8137597d359ad34a4b58fa4033321040f263b8ea61d769a60b3e",
+    "development_hash": "95f5e7f604a2ca293284b72bead449e7a9e7f66e82b9712ab26b5c9b4523c60a",
+    "development_rows": 742,
+    "development_from": "2021-01-03",
+    "development_to": "2023-12-31",
+    "instrument_key": "NSE_EQ|INE090A01021",
+    "symbol": "ICICIBANK",
+    "dataset_id": "icicibank-daily-79d0359eb567",
+    "notes": [
+      "Calendar coverage UNVERIFIED; adjustment status UNKNOWN.",
+      "Candidate weekday gaps from acquisition remain undisclosed here.",
+      "Modeled costs are illustrative, not verified broker charges."
+    ]
+  },
+  "summary": {
+    "closed_trades": 16,
+    "wins": 6,
+    "losses": 10,
+    "breakevens": 0,
+    "win_rate": 0.375,
+    "win_rate_wilson_95_lo": 0.18480982554752806,
+    "win_rate_wilson_95_hi": 0.613593529020652,
+    "avg_net_win": "261.36",
+    "avg_net_loss": "-244.62",
+    "net_expectancy_per_trade": "-54.88",
+    "profit_factor": 0.64,
+    "net_pnl_inr": "-878.03",
+    "modeled_fees_note": "Illustrative 10bps/side; not verified real tariffs.",
+    "signal_opportunities": 16,
+    "signals_skipped_while_holding": 6,
+    "initial_cash_inr": "20000.00",
+    "final_net_liquidation_inr": "19121.97",
+    "drawdown": {
+      "max_drawdown_inr": "1981.76",
+      "max_drawdown_pct": 0.09663421567838656
+    },
+    "yearly_development": {
+      "2021": {
+        "trades": 4,
+        "wins": 1,
+        "losses": 3
+      },
+      "2022": {
+        "trades": 7,
+        "wins": 2,
+        "losses": 5
+      },
+      "2023": {
+        "trades": 5,
+        "wins": 3,
+        "losses": 2
+      }
+    },
+    "halted_new_entries": false,
+    "ambiguous_same_bar_exits": 0,
+    "boundary_forced_exits": 0
+  },
+  "baselines": {
+    "cash": "20000.00",
+    "buy_and_hold": {
+      "status": "OK",
+      "shares": 30,
+      "entry_session": "2021-06-01 18:30:00+00:00",
+      "exit_session": "2023-12-31 18:30:00+00:00",
+      "final_equity_inr": "30428.08",
+      "net_pnl_inr": "10428.08"
+    }
+  },
+  "simulation_meta": {
+    "opportunity_count": 16,
+    "skipped_while_holding": 6,
+    "halted_new_entries": false,
+    "ambiguous_same_bar": 0,
+    "boundary_forced_exits": 0
+  },
+  "limitations": [
+    "Calendar UNVERIFIED; adjustment UNKNOWN.",
+    "Costs illustrative only; not verified Upstox/NSE/STT/GST/DP.",
+    "Development 2021-2023 only; 2024 validation and 2025 holdout not evaluated.",
+    "No optimization; single frozen strategy variant."
+  ]
+}

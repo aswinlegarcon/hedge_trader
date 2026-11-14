@@ -1,0 +1,179 @@
+{
+  "review_id": "ee63ea6a-53e8-4b22-aa8a-edd5d4c68a76",
+  "generated_at_utc": "2026-11-13T11:30:10.429971+00:00",
+  "status": "REVIEW_COMPLETE",
+  "analyst_conclusion": "INSUFFICIENT_EVIDENCE / COST_FRAGILE_VALIDATION",
+  "readiness": "EXPLORATORY",
+  "evidence_level": "INSUFFICIENT_EVIDENCE",
+  "not_live_ready": true,
+  "not_forward_paper_candidate": true,
+  "holdout_2025": "NOT_EVALUATED",
+  "frozen_rules_hash": "d5781d90f3276de37320059a14529c944580fc671c351cbbc04bed90bb191101",
+  "source_runs": {
+    "development": {
+      "run_id": "22f4e81b-e66a-4ea1-b77d-325323f61db7",
+      "fingerprints": {
+        "registration.json": "bae4ad33d537156a89ea2fb0b12c47c06fac465e2e4846486ee1e5c0c2bfe80b",
+        "manifest.json": "daaa1d6d078a5043f778d0b2d276bfbf30fa5922c12f3498f61591c7d4de0b7d",
+        "summary.json": "9cfcb7632ee9550cd0b55d15da98e0a3f4403beae9f8fc030272f59e582ca676",
+        "trades.json": "d7ff002938863ca73dd311b6b9e5bc5b9eaf0297f2f1f5322c1dd73be746301c",
+        "equity_daily.json": "5efd4178a92f14898ab79608f1791a38baa636e3f2092acdcc935b87cb5d0868"
+      },
+      "reconcile": {
+        "trade_net_sum_inr": "-869.13",
+        "summary_net_pnl_inr": "-869.13",
+        "final_cash_inr": "19130.87",
+        "cash_reconcile_delta_inr": "0.00"
+      }
+    },
+    "validation": {
+      "run_id": "d1d9016b-3fc0-4dbf-944e-f4dde5353cd2",
+      "evaluation_config_hash": "a5e169f0f061eb9d08ce9eacca4c3d0220da0b91a2bb39c2f97abcf66f5b7f58",
+      "fingerprints": {
+        "registration.json": "34dda22c3731e1ee891492b60fe1f9772bee81fc1385e8d640d1505d695d801a",
+        "manifest.json": "133418bbe450c9bbe4b4a25550687c69954a50d69d989e25b6af78fe4734e0b8",
+        "summary.json": "01863b432c87e0f9f1969602f32654b22b636049779944be5831e8d36bb1254d",
+        "trades.json": "85c896103ee498289bf7116c468f0cd86f05bac3e175d85e3929ffe344707b47",
+        "equity_daily.json": "78df14c792104d51a9fb93c6486311a661c296ebf6950ddf33d0034a6b793c9a"
+      },
+      "reconcile": {
+        "trade_net_sum_inr": "24.30",
+        "summary_net_pnl_inr": "24.30",
+        "final_cash_inr": "20024.30",
+        "cash_reconcile_delta_inr": "0.00"
+      },
+      "holdout_year_integrity": {
+        "2025": "c61ae38f20aacb004324731ca9f9ccc2b0a10eb8958dc8b7fd4e8836eeace00b"
+      }
+    }
+  },
+  "stress_definitions": {
+    "method": "FIXED_FILL_DIAGNOSTIC",
+    "base": "Archived modeled net P&L unchanged",
+    "bps_formula": "extra_cost = turnover * bps / 10000; turnover = sum(qty*entry_fill + qty*exit_fill)",
+    "bps_rounding": "ROUND_HALF_EVEN to 0.01 INR once on total extra cost",
+    "inr_per_execution": "\u20b91 per modeled entry plus \u20b91 per modeled exit (2 * closed_trades)",
+    "no_double_count": "Illustrative fees/slippage already embedded in archived fills and net P&L",
+    "bps_scenarios": [
+      1,
+      5,
+      10
+    ]
+  },
+  "per_book_diagnostics": {
+    "development": {
+      "book": "development_2021_2023",
+      "status": "OK",
+      "closed_trades": 16,
+      "executed_turnover_inr": "539668.04",
+      "archived_net_pnl_inr": "-869.13",
+      "net_return_on_initial_capital": "-4.35%",
+      "break_even_extra_bps": "ALREADY_NONPOSITIVE",
+      "scenarios": [
+        {
+          "scenario_id": "BASE",
+          "label": "Archived modeled net (unchanged)",
+          "extra_cost_inr": "0.00",
+          "diagnostic_net_pnl_inr": "-869.13",
+          "note": "FIXED_FILL_DIAGNOSTIC"
+        },
+        {
+          "scenario_id": "EXTRA_1BP",
+          "label": "Extra 1 bps on executed turnover",
+          "extra_bps": 1,
+          "extra_cost_inr": "53.97",
+          "diagnostic_net_pnl_inr": "-923.10",
+          "note": "FIXED_FILL_DIAGNOSTIC; does not re-simulate sizing/admission/exits"
+        },
+        {
+          "scenario_id": "EXTRA_5BP",
+          "label": "Extra 5 bps on executed turnover",
+          "extra_bps": 5,
+          "extra_cost_inr": "269.83",
+          "diagnostic_net_pnl_inr": "-1138.96",
+          "note": "FIXED_FILL_DIAGNOSTIC; does not re-simulate sizing/admission/exits"
+        },
+        {
+          "scenario_id": "EXTRA_10BP",
+          "label": "Extra 10 bps on executed turnover",
+          "extra_bps": 10,
+          "extra_cost_inr": "539.67",
+          "diagnostic_net_pnl_inr": "-1408.80",
+          "note": "FIXED_FILL_DIAGNOSTIC; does not re-simulate sizing/admission/exits"
+        },
+        {
+          "scenario_id": "EXTRA_INR1_PER_EXECUTION",
+          "label": "\u20b91 hypothetical per modeled entry and exit (2\u00d7closed trades)",
+          "extra_cost_inr": "32.00",
+          "diagnostic_net_pnl_inr": "-901.13",
+          "executions_counted": 32,
+          "note": "Separate from bps stresses; not a broker fill count claim"
+        }
+      ],
+      "disclaimer": "FIXED_FILL_DIAGNOSTIC: trades, qty, fills and portfolio path held fixed. Archived fees/slippage already inside net P&L \u2014 stresses are additive only."
+    },
+    "validation": {
+      "book": "validation_2024",
+      "status": "OK",
+      "closed_trades": 14,
+      "executed_turnover_inr": "430003.98",
+      "archived_net_pnl_inr": "24.30",
+      "net_return_on_initial_capital": "0.12%",
+      "break_even_extra_bps": 0.5651110485070394,
+      "scenarios": [
+        {
+          "scenario_id": "BASE",
+          "label": "Archived modeled net (unchanged)",
+          "extra_cost_inr": "0.00",
+          "diagnostic_net_pnl_inr": "24.30",
+          "note": "FIXED_FILL_DIAGNOSTIC"
+        },
+        {
+          "scenario_id": "EXTRA_1BP",
+          "label": "Extra 1 bps on executed turnover",
+          "extra_bps": 1,
+          "extra_cost_inr": "43.00",
+          "diagnostic_net_pnl_inr": "-18.70",
+          "note": "FIXED_FILL_DIAGNOSTIC; does not re-simulate sizing/admission/exits"
+        },
+        {
+          "scenario_id": "EXTRA_5BP",
+          "label": "Extra 5 bps on executed turnover",
+          "extra_bps": 5,
+          "extra_cost_inr": "215.00",
+          "diagnostic_net_pnl_inr": "-190.70",
+          "note": "FIXED_FILL_DIAGNOSTIC; does not re-simulate sizing/admission/exits"
+        },
+        {
+          "scenario_id": "EXTRA_10BP",
+          "label": "Extra 10 bps on executed turnover",
+          "extra_bps": 10,
+          "extra_cost_inr": "430.00",
+          "diagnostic_net_pnl_inr": "-405.70",
+          "note": "FIXED_FILL_DIAGNOSTIC; does not re-simulate sizing/admission/exits"
+        },
+        {
+          "scenario_id": "EXTRA_INR1_PER_EXECUTION",
+          "label": "\u20b91 hypothetical per modeled entry and exit (2\u00d7closed trades)",
+          "extra_cost_inr": "28.00",
+          "diagnostic_net_pnl_inr": "-3.70",
+          "executions_counted": 28,
+          "note": "Separate from bps stresses; not a broker fill count claim"
+        }
+      ],
+      "disclaimer": "FIXED_FILL_DIAGNOSTIC: trades, qty, fills and portfolio path held fixed. Archived fees/slippage already inside net P&L \u2014 stresses are additive only."
+    }
+  },
+  "brokerage_reference": {
+    "url": "https://upstox.com/brokerage-charges/",
+    "checked_date": "2026-11-13",
+    "note": "Reference only; no rates applied to historical fills in this review"
+  },
+  "limitations": [
+    "FIXED_FILL_DIAGNOSTIC only \u2014 no re-simulation of sizing, admission, or exits.",
+    "Illustrative 10 bps/side fees and slippage in archived runs; actual tariffs unresolved.",
+    "Independent accounts; do not pool development and validation returns.",
+    "Observed win rates are descriptive, not next-trade probability.",
+    "Single symbol ICICIBANK; small trade sample."
+  ]
+}

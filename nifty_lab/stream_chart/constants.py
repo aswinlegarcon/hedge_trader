@@ -1,0 +1,34 @@
+"""Fixed prototype scope (Spec 14)."""
+from __future__ import annotations
+
+from zoneinfo import ZoneInfo
+
+INSTRUMENT_KEY = "NSE_EQ|INE090A01021"
+INSTRUMENT_LABEL = "ICICIBANK"
+CANDLE_MINUTES = 5
+IST = ZoneInfo("Asia/Kolkata")
+
+LIGHTWEIGHT_CHARTS_VERSION = "4.2.1"
+LIGHTWEIGHT_CHARTS_CDN = (
+    f"https://unpkg.com/lightweight-charts@{LIGHTWEIGHT_CHARTS_VERSION}/"
+    "dist/lightweight-charts.standalone.production.js"
+)
+
+FEED_AUTHORIZE_PATH = "/v3/feed/market-data-feed/authorize"
+SUBSCRIBE_MODE = "ltpc"
+
+RENDER_INTERVAL_SEC = 1.0
+STALE_TRADE_SECONDS = 30
+MAX_RECONNECT_ATTEMPTS = 3
+RECONNECT_BACKOFF_SEC = (1.0, 2.0, 4.0)
+
+REPLAY_BANNER = "REPLAY — synthetic fixture timeline; zero broker HTTP/WebSocket."
+REPLAY_FRAME_DELAY_SEC = 0.4
+MAX_RETAINED_BARS = 500
+MAX_DEDUPE_KEYS = 10_000
+IDLE_SESSION_SEC = 120.0
+
+LWC_ATTRIBUTION = (
+    "Charts by TradingView Lightweight Charts v"
+    f"{LIGHTWEIGHT_CHARTS_VERSION} (Apache-2.0). See docs/spec_14/NOTICE_LIGHTWEIGHT_CHARTS.md."
+)

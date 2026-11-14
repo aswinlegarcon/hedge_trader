@@ -1,0 +1,76 @@
+{
+  "changed_mechanics": [
+    "Entry allocation ceiling enforced",
+    "Raw open vs stop gate before entry",
+    "Baseline sizing includes fees",
+    "Preflight config/manifest/meta validation"
+  ],
+  "correction_reason": "MECHANICS_CORRECTION",
+  "engine_source_digest": "8487e082e9e2910ad423085296644695577fd03e63535bc744324916c81c6762",
+  "frozen_rules": {
+    "costs_illustrative": {
+      "fee_bps_per_side": "10",
+      "real_costs": "UNKNOWN",
+      "slippage_bps_per_side": "10"
+    },
+    "development_years": [
+      2021,
+      2022,
+      2023
+    ],
+    "ema_alpha_rule": "2/(span+1), seed=first_close, adjust=False equivalent",
+    "ema_spans": [
+      20,
+      50
+    ],
+    "entry": "next_session_open_adverse_slip",
+    "entry_skip_if_raw_open_lte_stop_or_modeled_entry_lte_stop": true,
+    "exit": {
+      "gap_stop_uses_open": true,
+      "gap_target_uses_target": true,
+      "split_end_force_close": true,
+      "stop_before_target_same_bar": true,
+      "stop_signal_low": true,
+      "target_2r": true,
+      "time_exit_sessions": 5
+    },
+    "instrument_key": "NSE_EQ|INE090A01021",
+    "position": {
+      "max_open": 1,
+      "no_entry_on_exit_session": true,
+      "no_pyramiding": true
+    },
+    "precision": {
+      "arithmetic": "decimal.Decimal",
+      "reporting": "ROUND_HALF_UP quantize 0.01 INR"
+    },
+    "risk_latch": {
+      "initial_loss_inr": "2000.00",
+      "peak_drawdown_inr": "2000.00"
+    },
+    "signal": {
+      "close_gt_ema20_gt_ema50": true,
+      "low_lte_ema20": true,
+      "volume_gte_median_prior_20_excl_signal": true
+    },
+    "sizing": {
+      "entry_allocation_ceiling_inr": "20000.00",
+      "initial_cash_inr": "20000.00",
+      "max_planned_stop_inr": "400.00",
+      "whole_shares": true
+    },
+    "strategy_id": "icicibank_daily_pullback_v1",
+    "warmup_bars": 100
+  },
+  "original_rules_config_hash": "de784daaeabb7642c9ce213a832704a46b8ea60e2461fdc95f715cf7ae9df8fb",
+  "parent_run_id": "cffbcdd3-e725-4ca6-bd01-97d424dbc6a2",
+  "registered_at_utc": "2026-11-13T11:11:59.282658+00:00",
+  "rules_config_hash": "d5781d90f3276de37320059a14529c944580fc671c351cbbc04bed90bb191101",
+  "rules_mechanics_version": "mechanics_correction_v1",
+  "run_id": "22f4e81b-e66a-4ea1-b77d-325323f61db7",
+  "unchanged_economic_rules": [
+    "EMA spans/warmup/signal/exit structure",
+    "Illustrative 10bps slip and fee per side",
+    "\u20b920k initial cash (now also entry allocation ceiling)"
+  ]
+}

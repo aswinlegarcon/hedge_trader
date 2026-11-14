@@ -1,7 +1,6 @@
 from .base import BrokerStatus, ConnectionState, ReadOnlyBroker
-from .kite import KiteReadOnly
-from .kotak import KotakNeoReadOnly
+from .upstox import UpstoxReadOnly
 
-ALL_BROKERS = [KiteReadOnly(), KotakNeoReadOnly()]
+ALL_BROKERS = [UpstoxReadOnly()]
 
-__all__ = ["BrokerStatus", "ConnectionState", "ReadOnlyBroker", "KiteReadOnly", "KotakNeoReadOnly", "ALL_BROKERS"]
+__all__ = ["BrokerStatus", "ConnectionState", "ReadOnlyBroker", "UpstoxReadOnly", "ALL_BROKERS"]

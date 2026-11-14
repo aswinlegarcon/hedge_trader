@@ -1,0 +1,1 @@
+"""Read-only ICICIBANK 5m stream chart prototype (Spec 14)."""

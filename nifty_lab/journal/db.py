@@ -8,12 +8,15 @@ from __future__ import annotations
 import json
 import sqlite3
 from contextlib import contextmanager
-from dataclasses import asdict, dataclass, field
+from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Iterator
 
 import pandas as pd
+
+FUNDED_PAPER_QUALIFIED = "funded-paper-qualified"
+UNQUALIFIED_MANUAL = "unqualified-manual"
 
 SCHEMA = """
 CREATE TABLE IF NOT EXISTS journal_entries (
@@ -155,6 +158,25 @@ class Journal:
         with self._conn() as con:
             row = con.execute("SELECT COALESCE(SUM(max_risk_inr),0) AS r FROM journal_entries WHERE status='OPEN'").fetchone()
             return float(row["r"])
+
+    def open_position_count(self) -> int:
+        with self._conn() as con:
+            row = con.execute("SELECT COUNT(*) AS c FROM journal_entries WHERE status='OPEN'").fetchone()
+            return int(row["c"])
+
+    @staticmethod
+    def qualify_data_source(source: str) -> str:
+        if FUNDED_PAPER_QUALIFIED in (source or ""):
+            return source
+        prefix = f"{FUNDED_PAPER_QUALIFIED};"
+        body = source or ""
+        return prefix + body
+
+    @staticmethod
+    def manual_data_source(source: str = "") -> str:
+        if UNQUALIFIED_MANUAL in (source or ""):
+            return source or UNQUALIFIED_MANUAL
+        return f"{UNQUALIFIED_MANUAL};{source}".strip(";")
 
     def realised_pnl_inr(self) -> float:
         with self._conn() as con:

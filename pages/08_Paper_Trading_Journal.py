@@ -7,6 +7,7 @@ import pandas as pd
 import streamlit as st
 
 from nifty_lab.journal import JournalEntry
+from nifty_lab.journal.db import UNQUALIFIED_MANUAL
 from nifty_lab.ui.common import footer, get_journal, inr, setup_page
 
 cfg = setup_page("Paper Trading Journal")
@@ -55,12 +56,29 @@ with tab_new:
         target = c10.number_input("Profit target ₹", value=0.0, step=100.0)
         fills = st.text_input("Hypothetical fill prices (free text, e.g. 'sold 23500PE @ 85 bid, bought 23450PE @ 62 ask')")
         planned_exit = st.text_input("Planned exit")
-        if st.form_submit_button("Save paper entry"):
-            if max_risk > cfg.risk.risk_per_trade_max:
-                st.error(f"Max risk ₹{max_risk:,.0f} exceeds the configured per-trade budget ₹{cfg.risk.risk_per_trade_max:,.0f}. Entry not saved.")
+        if st.form_submit_button("Save unqualified manual entry"):
+            if max_risk > cfg.risk.max_drawdown:
+                st.error(f"Max risk ₹{max_risk:,.0f} exceeds the portfolio loss ceiling ₹{cfg.risk.max_drawdown:,.0f}. Entry not saved.")
             else:
-                eid = journal.add_entry(JournalEntry(trade_date=td.isoformat(), instrument=instrument, strategy=strategy, market_regime=regime, signal=signal, entry_thesis=thesis, fill_prices={"text": fills}, lots=int(lots), net_premium_inr=prem, max_risk_inr=max_risk, max_profit_inr=max_profit, profit_target_inr=target, planned_exit=planned_exit, data_source="manual"))
-                st.success(f"Saved paper entry #{eid}.")
+                eid = journal.add_entry(
+                    JournalEntry(
+                        trade_date=td.isoformat(),
+                        instrument=instrument,
+                        strategy=strategy,
+                        market_regime=regime,
+                        signal=signal,
+                        entry_thesis=thesis,
+                        fill_prices={"text": fills},
+                        lots=int(lots),
+                        net_premium_inr=prem,
+                        max_risk_inr=max_risk,
+                        max_profit_inr=max_profit,
+                        profit_target_inr=target,
+                        planned_exit=planned_exit,
+                        data_source=journal.manual_data_source("manual form"),
+                    )
+                )
+                st.success(f"Saved unqualified manual entry #{eid} ({UNQUALIFIED_MANUAL}). Does not count toward funded-paper qualification.")
 
 with tab_closed:
     df = journal.entries(status="CLOSED")

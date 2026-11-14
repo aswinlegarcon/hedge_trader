@@ -5,12 +5,18 @@ import pandas as pd
 import streamlit as st
 
 from nifty_lab.signals import evaluate
-from nifty_lab.ui.common import footer, get_journal, indicator_frame, provenance_banner, setup_page, sidebar_data_source
+from nifty_lab.ui.common import footer, get_journal, indicator_frame, provenance_banner, setup_page, sidebar_data_source, supports_nifty_signal_voting
 
 cfg = setup_page("Signal Monitor")
 ds = sidebar_data_source()
 provenance_banner(ds)
 if ds is None:
+    st.stop()
+if not supports_nifty_signal_voting(ds):
+    st.warning(
+        "Rule-based NIFTY signal voting is **unavailable** for this data source or timeframe. "
+        "Use synthetic/CSV daily NIFTY for the voting engine. Charts and indicators on other pages remain available."
+    )
     st.stop()
 journal = get_journal(cfg)
 ind = indicator_frame(ds.df)
