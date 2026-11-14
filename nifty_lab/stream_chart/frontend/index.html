@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <script src="https://unpkg.com/streamlit-component-lib@2.0.0/dist/index.js"></script>
   <script src="https://unpkg.com/lightweight-charts@4.2.1/dist/lightweight-charts.standalone.production.js"></script>
   <style>
     html, body { margin: 0; padding: 0; background: #0e1117; color: #d1d4dc; font-family: sans-serif; }
@@ -14,31 +13,18 @@
   <div id="mount"></div>
   <div id="meta"></div>
   <script>
-    const Streamlit = window.Streamlit;
+    // Minimal Streamlit component bridge. The npm streamlit-component-lib ships only an ES module, which a
+    // plain <script> tag cannot execute, so speak the (stable, v1) postMessage protocol directly.
+    const post = (type, data) => window.parent.postMessage({ isStreamlitMessage: true, type, ...data }, "*");
     const MOUNT_ID = "mount";
     const KEY = "__nslLwc_spec14";
 
     function applyBars(slot, data) {
-      if (!data || data.length === 0) {
-        slot.series.setData([]);
-        slot.lastCount = 0;
-        slot.updateCount = (slot.updateCount || 0) + 1;
-        return;
-      }
-      const prev = slot.lastCount || 0;
-      if (prev === 0) {
-        slot.series.setData(data);
-      } else if (data.length === prev) {
-        slot.series.update(data[data.length - 1]);
-      } else if (data.length > prev) {
-        if (data.length >= 2) {
-          slot.series.update(data[data.length - 2]);
-        }
-        slot.series.update(data[data.length - 1]);
-      } else {
-        slot.series.setData(data);
-      }
-      slot.lastCount = data.length;
+      // Replace the whole series every render: the Python side already owns the bounded window
+      // (MAX_RETAINED_BARS), so append, rolling, shrink, clear and restart all stay in sync.
+      // series.update() cannot drop bars that left the window; setData() keeps the user's
+      // bar spacing / right offset, so the viewport is preserved.
+      slot.series.setData(data || []);
       slot.updateCount = (slot.updateCount || 0) + 1;
     }
 
@@ -54,33 +40,31 @@
         rightPriceScale: { borderColor: "#2a2e39" },
       });
       const series = chart.addCandlestickSeries();
-      const slot = { chart, series, instanceId: crypto.randomUUID(), lastCount: 0, updateCount: 0 };
+      const slot = { chart, series, instanceId: crypto.randomUUID(), updateCount: 0 };
       window[KEY] = slot;
       window.addEventListener("resize", () => chart.applyOptions({ width: el.clientWidth }));
       return slot;
     }
 
-    function onRender(event) {
-      const args = event.detail.args || {};
+    function onRender(args) {
       const bars = args.bars || [];
-      const reset = !!args.reset;
       const slot = ensureChart();
-      if (reset) {
-        slot.series.setData([]);
-        slot.lastCount = 0;
-      }
       applyBars(slot, bars);
       document.getElementById("meta").textContent =
         `instance=${slot.instanceId} updates=${slot.updateCount} bars=${bars.length}`;
-      Streamlit.setComponentValue({
-        instanceId: slot.instanceId,
-        updateCount: slot.updateCount,
-        barCount: bars.length,
+      post("streamlit:setFrameHeight", { height: document.body.scrollHeight });
+      post("streamlit:setComponentValue", {
+        value: { instanceId: slot.instanceId, updateCount: slot.updateCount, barCount: bars.length },
+        dataType: "json",
       });
     }
 
-    Streamlit.events.addEventListener(Streamlit.RENDER_EVENT, onRender);
-    Streamlit.setComponentReady();
+    window.addEventListener("message", (event) => {
+      if (event.data && event.data.type === "streamlit:render") {
+        onRender(event.data.args || {});
+      }
+    });
+    post("streamlit:componentReady", { apiVersion: 1 });
   </script>
 </body>
 </html>

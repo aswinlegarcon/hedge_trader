@@ -1,4 +1,4 @@
-"""Spec 14 — acceptance corrections (offline REPLAY, candles, session, browser harness)."""
+"""Spec 14 — acceptance corrections (offline REPLAY, candles, session). Browser: test_spec14_browser_acceptance.py."""
 from __future__ import annotations
 
 import json
@@ -38,7 +38,6 @@ from nifty_lab.stream_chart.stream_session import (
 from nifty_lab.stream_chart.transport import ReplayTransport, ScriptedLiveTransport, fetch_authorized_ws_uri
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
-HARNESS = PROJECT_ROOT / "tests" / "fixtures" / "lwc_harness.html"
 
 
 class MockTransport:
@@ -233,52 +232,6 @@ def test_apptest_page14_load_and_replay(monkeypatch):
     stop.click().run(timeout=30)
     assert not at.exception
     assert http_calls == []
-
-
-def test_playwright_persistent_chart_updates():
-    playwright = pytest.importorskip("playwright.sync_api", exc_type=ImportError)
-    sync_playwright = playwright.sync_playwright
-
-    assert HARNESS.is_file()
-    bar45 = BAR_0445
-    bar50 = BAR_0450
-
-    with sync_playwright() as p:
-        browser = p.chromium.launch()
-        page = browser.new_page()
-        page.goto(HARNESS.resolve().as_uri())
-        page.wait_for_function("window.__test && window.__test.getSlot()")
-
-        slot0 = page.evaluate("() => window.__test.getSlot().instanceId")
-        page.evaluate(
-            """([t,o,h,l,c]) => window.__test.applyBars([{time:t,open:o,high:h,low:l,close:c}])""",
-            [bar45, 1, 2, 0.5, 1.5],
-        )
-        page.evaluate(
-            """([t,o,h,l,c]) => window.__test.applyBars([{time:t,open:o,high:h,low:l,close:c}])""",
-            [bar45, 1, 2.2, 0.5, 2.0],
-        )
-        page.evaluate("() => window.__test.setVisibleRange()")
-        vr0 = page.evaluate("() => window.__test.getVisibleRange()")
-        page.evaluate(
-            """([t1,t2]) => window.__test.applyBars([
-            {time:t1,open:1,high:2.2,low:0.5,close:2.0},
-            {time:t2,open:2,high:2.5,low:1.8,close:2.3}])""",
-            [bar45, bar50],
-        )
-        slot1 = page.evaluate("() => window.__test.getSlot().instanceId")
-        updates_mid = page.evaluate("() => window.__test.getSlot().updateCount")
-        vr1 = page.evaluate("() => window.__test.getVisibleRange()")
-        page.evaluate("() => window.__test.applyBars([])")
-        cleared = page.evaluate("() => window.__test.getSlot().lastCount")
-        updates_final = page.evaluate("() => window.__test.getSlot().updateCount")
-        browser.close()
-
-    assert slot0 == slot1
-    assert updates_mid >= 3
-    assert updates_final >= 4
-    assert vr0 is not None and vr1 is not None
-    assert cleared == 0
 
 
 def test_subscribe_frame_utf8():

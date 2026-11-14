@@ -13,9 +13,8 @@ _lwc_component = components.declare_component("nsl_spec14_lwc", path=str(_FRONTE
 def render_candlestick_chart(
     *,
     bars: list[dict],
-    reset: bool = False,
     component_key: str = "spec14-lwc",
 ) -> dict[str, Any] | None:
     """Update chart via component bridge; returns instance metadata from the browser."""
-    value = _lwc_component(bars=bars, reset=reset, key=component_key, default=None)
+    value = _lwc_component(bars=bars, key=component_key, default=None)
     return value if isinstance(value, dict) else None
